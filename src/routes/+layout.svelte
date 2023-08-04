@@ -1,9 +1,13 @@
+<script lang="ts">
+	export const page_name = '/ool';
+</script>
+
 <div id="menubar">
 	<div>
 		<span class="logotext"> cointhink </span>
 	</div>
 
-	<div>Pools</div>
+	<div>{page_name}</div>
 
 	<div>login</div>
 </div>
@@ -14,5 +18,9 @@
 	#menubar {
 		display: flex;
 		justify-content: space-between;
+	}
+	.logotext {
+		font-family: 'Montserrat', sans-serif;
+		margin: 0.2em 0;
 	}
 </style>
