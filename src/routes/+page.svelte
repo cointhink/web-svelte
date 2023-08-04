@@ -1,2 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div>
+	<span class="logotext"> cointhink </span>
+</div>
+
+<div>+page.svelte</div>
+
+<style>
+	body {
+		background-color: black;
+	}
+	.logotext {
+		font-family: 'Montserrat', sans-serif;
+		margin: 0.2em 0;
+	}
+</style>
