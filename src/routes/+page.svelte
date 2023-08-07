@@ -1,11 +1,8 @@
 <script lang="ts">
-	export const page_name = 'zool';
-	import { Poolrow } from '$lib/Poolrow.svelte';
-	//import * as components from '$lib/slices'
+	import  Poolrow  from '$lib/Poolrow.svelte';
+	import Menubar from '$lib/Menubar.svelte';
 </script>
 
-<div>+page.svelte</div>
+<Menubar page_name="pooltime" />
+<Poolrow />
 
-
-<style>
-</style>
