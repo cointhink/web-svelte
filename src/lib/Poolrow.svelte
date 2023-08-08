@@ -2,4 +2,4 @@
   export let pool
 </script>
 
-<div>{pool.address}</div>
+<div>{JSON.stringify(pool)}{pool.address}</div>

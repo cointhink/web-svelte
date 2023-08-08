@@ -2,11 +2,14 @@
 	import Poolrow from '$lib/Poolrow.svelte';
 	import Menubar from '$lib/Menubar.svelte';
 
-  let pools = [{a:1}, {b:1}]
+  import type {PageData} from './$types';
+
+  export let data;
+
 </script>
 
 <Menubar page_name="pooltime" />
 
-{#each pools as pool}
+{#each data.pools as pool}
 	<Poolrow pool={pool}/>
 {/each}

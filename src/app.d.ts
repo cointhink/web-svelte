@@ -9,4 +9,5 @@ declare global {
 	}
 }
 
-export {};
+type PageLoad = {v;number}
+export {PageLoad};
