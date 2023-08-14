@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let pool
+	export let pool;
 </script>
 
 <div>{JSON.stringify(pool)}</div>
-<div>{pool.address}</div>
+<div>
+	{pool.contract_address}
+	{pool.reserves[0].x}
+	{pool.reserves[0].y}
+</div>
