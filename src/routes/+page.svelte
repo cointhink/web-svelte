@@ -9,6 +9,7 @@
 
 <Menubar page_name="pooltime" />
 
+Uniswap V2
 {#each data.pools as pool}
 	<Poolrow {pool} />
 {/each}
