@@ -7,7 +7,7 @@
 	export let data;
 </script>
 
-<Menubar page_name="pooltime" />
+<Menubar page_name="liquidity pools" />
 
 Uniswap V2
 {#each data.pools as pool}

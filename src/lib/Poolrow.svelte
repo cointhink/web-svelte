@@ -1,7 +1,6 @@
 <script lang="ts">
 	export let pool;
-	const x = pool.reserves[0].x
-	const y = pool.reserves[0].y
+	const reserves = pool.reserves[0]
 </script>
 
 <style>
@@ -14,9 +13,9 @@
 	pool
 	{pool.token0.symbol}/
 	{pool.token1.symbol}
-	({pool.contract_address})
+	<a href="https://v2.info.uniswap.org/pair/0x{pool.contract_address}">v2</a>
 </div>
 <div>
-y {y} / x {x} = {x/y} {pool.token0.symbol}
+#{reserves.block_number} y {reserves.y} / x {reserves.x} = {reserves.x/reserves.y} {pool.token0.symbol}
 </div>
 </div>
