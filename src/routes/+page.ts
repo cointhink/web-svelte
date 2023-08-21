@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 
-export const load = async ({ params }) => {
+export const load = async ({ fetch, params }) => {
 	const url = 'https://cointhink.com/sql/pools';
 	const pools = await fetch(url).then((ps) => ps.json());
 	for (const pool of pools) {
