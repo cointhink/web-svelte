@@ -7,9 +7,11 @@
 	export let data;
 </script>
 
-<Menubar page_name="liquidity pools" />
+<div id="page">
+	<Menubar page_name="liquidity pools" />
 
-Uniswap V2
-{#each data.pools as pool}
-	<Poolrow {pool} />
-{/each}
+	Uniswap V2
+	{#each data.pools as pool}
+		<Poolrow {pool} />
+	{/each}
+</div>
