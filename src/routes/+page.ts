@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 export const load = async ({ fetch, params }) => {
-	const url = 'https://cointhink.com/sql/pools';
+	const url = 'https://cointhink.com/sql/pools?limit=10';
 	const pools = await fetch(url).then((ps) => ps.json());
 	for (const pool of pools) {
 		const url = 'https://cointhink.com/sql/reserves?contract_address=eq.' + pool.contract_address;
