@@ -16,8 +16,14 @@
 		<a href="https://v2.info.uniswap.org/pair/0x{pool.contract_address}">v2</a>
 	</div>
 	<div>
-		#{last_reserves.block_number} y {y} / x {x} = {x / y}
+		price: {(x / y).toFixed(4)}
 		{pool.token0.symbol}
+	</div>
+	<div>
+		reserves: {pool.token0.symbol}
+		{x.toFixed(0)}
+		{pool.token1.symbol}
+		{y.toFixed(0)}
 	</div>
 	<D3Chart {reserves} />
 </div>

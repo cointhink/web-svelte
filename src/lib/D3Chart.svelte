@@ -4,31 +4,52 @@
 	import { onMount } from 'svelte';
 	import * as d3 from 'd3';
 
-	let sparkline;
+	let sparkline_div;
 	let innerWidth;
 	let innerHeight;
 
 	onMount(() => {
-		d3.select(sparkline)
-			.selectAll('div')
-			.data(reserves)
-			.enter()
+		let width = innerWidth / 2;
+		let height = innerHeight / 10;
+		let sparkline = d3.select(sparkline_div);
+		let svg = sparkline
 			.append('svg')
-			.style('background-color', 'red')
-			.attr('width', innerWidth / 2)
-			.attr('height', innerHeight / 10)
-			.append('g')
+			.style('background-color', 'grey')
+			.attr('width', width)
+			.attr('height', height);
+
+		const domain = 
+				d3.extent(reserves, function (d) {
+					return d.block_number;
+				})
+		const x = d3
+			.scaleLinear()
+			.domain(domain)
+			.range([0, width]);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(reserves, function(d) { return parseFloat(d.x); })])
+      .range([ height-22, 5 ]);
+
+		svg.append('g').attr('transform', `translate(0, ${height-22})`).call(d3.axisBottom(x));
+
+		sparkline
 			.append('div')
 			.style('background-color', 'blue')
-			.style('width', function (d) {
-				return '100px';
-			})
-			.text(function (d) {
-				return JSON.stringify(d);
-			});
+			.text(JSON.stringify(reserves));
+
+	  svg.append("path")
+      .datum(reserves)
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-width", 11.5)
+      .attr("d", d3.line()
+        .x(function(d) { console.log(d); return x(d.block_number) })
+        .y(function(d) { return y(parseFloat(d.x)) })
+        )
 	});
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<div bind:this={sparkline}>sparky</div>
+<div bind:this={sparkline_div} />
