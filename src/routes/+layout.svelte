@@ -1,6 +1,6 @@
 <slot />
 
-<style >
+<style>
 	:global(body) {
 		background-color: #435866;
 		color: #ced3b6;
