@@ -1,5 +1,3 @@
-<slot />
-
 <style>
 	:global(body) {
 		background-color: #435866;
@@ -9,3 +7,5 @@
 		color: inherit;
 	}
 </style>
+
+<slot />
