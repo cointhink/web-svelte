@@ -9,7 +9,7 @@
 
 	<div>{page_name}</div>
 
-	<div> <a href="/login"> login </a> </div>
+	<div><a href="/login"> login </a></div>
 </div>
 
 <slot />
