@@ -1,5 +1,15 @@
 <script lang="ts">
+import { token } from "$lib/token_store"
+import { browser } from '$app/environment';
+
 	export let page_name;
+	let token_value;
+	if(browser) {
+			console.log('menubar token', token)
+			token.subscribe((value) => {
+				token_value = value
+			})
+	}
 </script>
 
 <div id="menubar">
@@ -9,7 +19,11 @@
 
 	<div>{page_name}</div>
 
+	{#if token}
+	<div>token {token}</div>
+	{:else}
 	<div><a href="/login"> login </a></div>
+	{/if}
 </div>
 
 <slot />
