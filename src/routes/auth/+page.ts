@@ -1,13 +1,13 @@
 import type { PageLoad } from './$types';
-import { browser } from "$app/environment";
-
-console.log('browser', browser)
+import { browser } from '$app/environment';
 
 export const load = async ({ fetch, params, url }) => {
-	console.log('load url', url)
-	const token = url.location
-	
-	const auth_url = 'https://cointhink.com/api/auth/' + token;
-
-	return await fetch(auth_url).then((ps) => ({ status: ps.status, response: ps.json() }));
+	if (browser) {
+		const params = url.searchParams;
+		const token = params.get('token');
+		if (token) {
+			const auth_url = 'https://cointhink.com/api/auth/' + token;
+			return await fetch(auth_url).then((ps) => ({ status: ps.status, response: ps.json() }));
+		}
+	}
 };
