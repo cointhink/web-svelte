@@ -11,7 +11,7 @@
 	}
 
 	function logout() {
-		token.set(null)
+		token.set(null);
 	}
 </script>
 
@@ -24,7 +24,7 @@
 
 	{#if token_value}
 		<div>{JSON.stringify(token_value.email)}</div>
-		<div><button on:click={logout}> logout </button> </div>
+		<div><button on:click={logout}> logout </button></div>
 	{:else}
 		<div><a href="/login"> login </a></div>
 	{/if}
