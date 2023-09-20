@@ -1,28 +1,27 @@
 <script lang="ts">
-import { token } from "$lib/token_store"
-import { browser } from '$app/environment';
+	import { token } from '$lib/token_store';
+	import { browser } from '$app/environment';
 
 	export let page_name;
 	let token_value;
-	if(browser) {
-			console.log('menubar token', token)
-			token.subscribe((value) => {
-				token_value = value
-			})
+	if (browser) {
+		token.subscribe((value) => {
+			token_value = value;
+		});
 	}
 </script>
 
 <div id="menubar">
 	<div>
-		<span class="logotext"> cointhink </span>
+		<a href="/"><span class="logotext"> cointhink </span></a>
 	</div>
 
 	<div>{page_name}</div>
 
 	{#if token}
-	<div>token {token}</div>
+		<div>token {JSON.stringify(token_value)}</div>
 	{:else}
-	<div><a href="/login"> login </a></div>
+		<div><a href="/login"> login </a></div>
 	{/if}
 </div>
 

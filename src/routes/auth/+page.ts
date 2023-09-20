@@ -3,11 +3,13 @@ import { browser } from '$app/environment';
 
 export const load = async ({ fetch, params, url }) => {
 	if (browser) {
-		const params = url.searchParams;
-		const token = params.get('token');
-		if (token) {
-			const auth_url = 'https://cointhink.com/api/auth/' + token;
-			return await fetch(auth_url).then((ps) => ({ status: ps.status, response: ps.json() }));
-		}
+		const token = url.searchParams.get('token');
+		const auth_url = 'https://cointhink.com/api/auth/' + token;
+		console.log(auth_url);
+		const id = await fetch(auth_url).then(async (ps) => ({
+			status: ps.status,
+			response: await ps.json()
+		}));
+		return { token: token, id: id };
 	}
 };
