@@ -11,5 +11,12 @@ const stored = browser && localStorage.token;
 export const token = writable(stored);
 
 // Anytime the store changes, update the localStorage value.
-token.subscribe((value) => (browser ? (localStorage.token = value) : 'token_store_err'));
-// or localStorage.setItem('content', value)
+token.subscribe((value) => {
+	if (browser) {
+		if (value) {
+			localStorage.setItem('token', value);
+		} else {
+			localStorage.removeItem('token');
+		}
+	}
+});

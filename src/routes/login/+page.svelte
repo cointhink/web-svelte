@@ -5,7 +5,7 @@
 		const email_field = form.target[0]; //fragile. how to fix?
 		const email = form.target[0].value;
 		const url = '/api/register/' + email;
-		console.log(url);
+		console.log('handleOnSubmit', 'POST', url);
 		const response = await fetch(url, { method: 'POST' });
 		const json = await response.json();
 		console.log(json);

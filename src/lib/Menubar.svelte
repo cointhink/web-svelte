@@ -23,8 +23,10 @@
 	<div>{page_name}</div>
 
 	{#if token_value}
-		<div>{JSON.stringify(token_value.email)}</div>
-		<div><button on:click={logout}> logout </button></div>
+		<div>
+			{JSON.stringify(token_value)}
+			<button on:click={logout}> logout </button>
+		</div>
 	{:else}
 		<div><a href="/login"> login </a></div>
 	{/if}
