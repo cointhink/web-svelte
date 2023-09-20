@@ -3,6 +3,7 @@
 
 	async function handleOnSubmit() {
 		const url = '/api/login';
+		console.log(url)
 		const response = await fetch(url, { method: 'POST' });
 		const json = await response.json();
 		console.log(json);
@@ -16,8 +17,6 @@
 <form on:submit={handleOnSubmit}>
 	<div>email address</div>
 	<input type="email" name="email" />
-	<div>password</div>
-	<input type="password" name="password" />
 	<div>
 		<button> Login </button>
 	</div>

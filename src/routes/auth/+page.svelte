@@ -5,8 +5,8 @@
 	export let data;
 
 	//https://dev.to/danawoodman/svelte-quick-tip-connect-a-store-to-local-storage-4idi
-	if (data.token) {
-		token.set(data.token);
+	if (data.token && data.id.status == 200) {
+		token.set({token: data.token, email: data.id.response});
 	}
 </script>
 
