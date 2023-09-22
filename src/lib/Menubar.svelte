@@ -7,6 +7,7 @@
 	if (browser) {
 		token.subscribe((value) => {
 			token_value = value;
+			console.log('token_value =', value);
 		});
 	}
 
@@ -24,7 +25,7 @@
 
 	{#if token_value}
 		<div>
-			{JSON.stringify(token_value)}
+			{token_value.email}
 			<button on:click={logout}> logout </button>
 		</div>
 	{:else}

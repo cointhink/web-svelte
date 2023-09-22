@@ -4,7 +4,12 @@ import { browser } from '$app/environment';
 console.log('token_store browser', browser);
 
 // Get the value out of localStorage on load.
-const stored = browser && localStorage.token;
+let stored;
+try {
+	stored = browser && JSON.parse(localStorage.token);
+} catch (e) {
+	stored = null;
+}
 // or localStorage.getItem('content')
 
 // export the store, initialized with the value from localStorage
@@ -14,7 +19,7 @@ export const token = writable(stored);
 token.subscribe((value) => {
 	if (browser) {
 		if (value) {
-			localStorage.setItem('token', value);
+			localStorage.setItem('token', JSON.stringify(value));
 		} else {
 			localStorage.removeItem('token');
 		}
