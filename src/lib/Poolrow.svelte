@@ -8,9 +8,6 @@
 	const y = last_reserves.y / 10 ** pool.token1.decimals;
 
 	import D3Chart from './D3Chart.svelte';
-
-	//onMount(async () => (pool = await moar()));
-	//async function moar() {}
 </script>
 
 <div id="div">
