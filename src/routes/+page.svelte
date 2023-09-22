@@ -7,15 +7,17 @@
 
 	//export let data;
 	let pools = [];
+	let loading = true;
 
-	onMount(async () => (pools = await moar(pools)));
+	onMount(async () => {
+		pools = await moar(pools);
+		loading = false;
+	});
+
 	async function moar(pools) {
 		const url = 'https://cointhink.com/sql/pools?limit=10';
 		console.log(url);
 		pools = await fetch(url).then((ps) => ps.json());
-		for (const pool of pools) {
-			await poolmoar(pool);
-		}
 		return pools;
 	}
 	async function poolmoar(pool) {
@@ -32,8 +34,12 @@
 <div id="page">
 	<Menubar page_name="liquidity pools" />
 
-	Uniswap V2
-	{#each pools as pool}
-		<Poolrow {pool} />
-	{/each}
+	{#if loading}
+		Loading...
+	{:else}
+		{pools.length} pools Uniswap V2
+		{#each pools as pool}
+			<Poolrow {pool} />
+		{/each}
+	{/if}
 </div>
