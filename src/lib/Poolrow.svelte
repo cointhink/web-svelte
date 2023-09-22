@@ -1,11 +1,16 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	export let pool;
+
 	const reserves = pool.reserves;
 	const last_reserves = reserves[0];
 	const x = last_reserves.x / 10 ** pool.token0.decimals;
 	const y = last_reserves.y / 10 ** pool.token1.decimals;
 
 	import D3Chart from './D3Chart.svelte';
+
+	//onMount(async () => (pool = await moar()));
+	//async function moar() {}
 </script>
 
 <div id="div">
