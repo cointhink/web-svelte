@@ -24,9 +24,14 @@
 	<div>{page_name}</div>
 
 	{#if token_value}
-		<div>
+		<div class="username">
 			{token_value.email}
-			<button on:click={logout}> logout </button>
+			<div class="usermenu">
+				<div>
+					email: {token_value.email}
+				</div>
+				<button on:click={logout}>logout</button>
+			</div>
 		</div>
 	{:else}
 		<div><a href="/login"> login </a></div>
@@ -43,5 +48,22 @@
 	.logotext {
 		font-family: 'Montserrat', sans-serif;
 		margin: 0.2em 0;
+	}
+
+	.usermenu {
+		display: none;
+		position: absolute;
+		padding: 0;
+		padding: 0em 1em;
+		right: 0;
+	}
+
+	.username:hover > .usermenu {
+		display: block;
+		background: hsl(none none 40%);
+	}
+
+	button {
+		border: none;
 	}
 </style>
