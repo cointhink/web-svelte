@@ -26,7 +26,9 @@
 		const y = d3
 			.scaleLinear()
 			.domain([
-				0,
+				d3.min(reserves, function (d) {
+					return parseFloat(d.x);
+				}),
 				d3.max(reserves, function (d) {
 					return parseFloat(d.x);
 				})
@@ -44,17 +46,18 @@
 			.append('path')
 			.datum(reserves)
 			.attr('fill', 'none')
-			.attr('stroke', 'steelblue')
-			.attr('stroke-width', 11.5)
+			.attr('stroke', 'white')
+			.attr('stroke-width', 1.5)
 			.attr(
 				'd',
 				d3
 					.line()
 					.x(function (d) {
-						console.log(d);
+						console.log('d3 line x', x(d.block_number));
 						return x(d.block_number);
 					})
 					.y(function (d) {
+						console.log('d3 line y', y(parseFloat(d.x)));
 						return y(parseFloat(d.x));
 					})
 			);

@@ -46,9 +46,9 @@
 		</div>
 		<div>
 			reserves: {pool.token0.symbol}
-			{x.toFixed(0)}
+			{x.toFixed(1)}
 			{pool.token1.symbol}
-			{y.toFixed(0)}
+			{y.toFixed(1)}
 		</div>
 		<D3Chart {reserves} />
 	</div>
