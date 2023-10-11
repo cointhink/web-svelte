@@ -1,8 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-console.log('token_store browser', browser);
-
 // Get the value out of localStorage on load.
 let stored;
 try {

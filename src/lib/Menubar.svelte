@@ -7,7 +7,6 @@
 	if (browser) {
 		token.subscribe((value) => {
 			token_value = value;
-			console.log('token_value =', value);
 		});
 	}
 
