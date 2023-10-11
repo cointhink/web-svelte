@@ -23,7 +23,7 @@
 		});
 		const x = d3.scaleLinear().domain(domain).range([0, width]);
 
-		const y = d3
+		const y1 = d3
 			.scaleLinear()
 			.domain([
 				d3.min(reserves, function (d) {
@@ -31,6 +31,18 @@
 				}),
 				d3.max(reserves, function (d) {
 					return parseFloat(d.x);
+				})
+			])
+			.range([height - 22, 5]);
+
+		const y2 = d3
+			.scaleLinear()
+			.domain([
+				d3.min(reserves, function (d) {
+					return parseFloat(d.y);
+				}),
+				d3.max(reserves, function (d) {
+					return parseFloat(d.y);
 				})
 			])
 			.range([height - 22, 5]);
@@ -46,19 +58,34 @@
 			.append('path')
 			.datum(reserves)
 			.attr('fill', 'none')
-			.attr('stroke', 'white')
+			.attr('stroke', '#fff')
 			.attr('stroke-width', 1.5)
 			.attr(
 				'd',
 				d3
 					.line()
 					.x(function (d) {
-						console.log('d3 line x', x(d.block_number));
 						return x(d.block_number);
 					})
 					.y(function (d) {
-						console.log('d3 line y', y(parseFloat(d.x)));
-						return y(parseFloat(d.x));
+						return y1(parseFloat(d.x));
+					})
+			);
+		svg
+			.append('path')
+			.datum(reserves)
+			.attr('fill', 'none')
+			.attr('stroke', '#bbb')
+			.attr('stroke-width', 1.5)
+			.attr(
+				'd',
+				d3
+					.line()
+					.x(function (d) {
+						return x(d.block_number);
+					})
+					.y(function (d) {
+						return y2(parseFloat(d.y));
 					})
 			);
 	});
