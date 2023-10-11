@@ -15,7 +15,7 @@
 	});
 
 	async function moar(pools) {
-		const url = 'https://cointhink.com/sql/pools?limit=10';
+		const url = 'https://cointhink.com/sql/pools?limit=5';
 		console.log(url);
 		pools = await fetch(url).then((ps) => ps.json());
 		return pools;

@@ -52,7 +52,8 @@
 			.attr('transform', `translate(0, ${height - 22})`)
 			.call(d3.axisBottom(x));
 
-		sparkline.append('div').style('background-color', 'blue').text(JSON.stringify(reserves));
+		// debug
+		//sparkline.append('div').style('background-color', 'blue').text(JSON.stringify(reserves));
 
 		svg
 			.append('path')
