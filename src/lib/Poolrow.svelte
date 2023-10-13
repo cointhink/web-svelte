@@ -35,6 +35,7 @@
 {:else}
 	<div id="div">
 		<div>
+			<div><a href="/pool/{pool.contract_address}"> pool</a></div>
 			pool
 			{pool.token0.symbol}/
 			{pool.token1.symbol}
