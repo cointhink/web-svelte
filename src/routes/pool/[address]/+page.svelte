@@ -6,6 +6,7 @@
 <div>
 	I am pool/{JSON.stringify(data.params.address)}
 </div>
+
 {#each data.logs as log}
 	{JSON.stringify(log)}
 {/each}
