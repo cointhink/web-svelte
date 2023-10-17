@@ -8,8 +8,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         if path.suffix == '': 
             self.path = '/200.html'
             path = pathlib.Path(self.path)
-            #self.path += ".html" # try_files $url.html
-        print(f"path {path} suffix {path.suffix} newpath {self.path}")
         try:
             mime = extToMime(path.suffix)
             file_to_open = open(self.path[1:]).read()
