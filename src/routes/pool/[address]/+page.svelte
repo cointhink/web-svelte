@@ -1,5 +1,6 @@
 <script>
 	import { moar } from '$lib/pool';
+	import { numDec } from '$lib/util';
 	import { onMount } from 'svelte';
 	export let data;
 	let logs = [];
@@ -31,6 +32,10 @@
 	});
 </script>
 
+<style>
+ .pool_tx { font-family: monospace }
+</style>
+
 <div>
 	{token0.name}/{token1.name}
 	{data.params.address}
@@ -41,10 +46,13 @@
 </div>
 
 {#each logs as log}
-	<pre>
-	coin0 in: {log.in0 / 10 ** token0.decimals} {token0.name}
-	coin1 in: {log.in1 / 10 ** token1.decimals} {token1.name}
-	coin0 out: {log.out0}
-	coin1 out: {log.out1}
-	</pre>
+	<div class="pool_tx">
+	{#if log.in0 == 0}
+	{numDec(log.out0, token0.decimals)} {token0.name} &lt;-
+	{numDec(log.in1, token1.decimals)} {token1.name} 
+	{:else}
+	{numDec(log.in0, token0.decimals)} {token0.name} -&gt; 
+	{numDec(log.out1, token1.decimals)} {token1.name}
+	{/if}
+	</div>
 {/each}
