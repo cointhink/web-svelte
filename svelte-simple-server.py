@@ -4,12 +4,14 @@ import pathlib
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
+        self.path = "/build" + self.path 
         path = pathlib.Path(self.path)
         if path.suffix == '': 
-            self.path = '/200.html'
+            self.path = '/build/200.html'
             path = pathlib.Path(self.path)
         try:
             mime = extToMime(path.suffix)
+            print(f"reading {self.path[1:]}")
             file_to_open = open(self.path[1:]).read()
             self.send_response(200)
             self.send_header('Content-type', mime)
