@@ -1,4 +1,5 @@
 <script>
+	import Menubar from '$lib/Menubar.svelte';
 	import { moar } from '$lib/pool';
 	import { numDec } from '$lib/util';
 	import { onMount } from 'svelte';
@@ -32,9 +33,9 @@
 	});
 </script>
 
-<style>
- .pool_tx { font-family: monospace }
-</style>
+<div id="page">
+	<Menubar page_name="auth" />
+</div>
 
 <div>
 	{token0.name}/{token1.name}
@@ -47,12 +48,22 @@
 
 {#each logs as log}
 	<div class="pool_tx">
-	{#if log.in0 == 0}
-	{numDec(log.out0, token0.decimals)} {token0.name} &lt;-
-	{numDec(log.in1, token1.decimals)} {token1.name} 
-	{:else}
-	{numDec(log.in0, token0.decimals)} {token0.name} -&gt; 
-	{numDec(log.out1, token1.decimals)} {token1.name}
-	{/if}
+		{#if log.in0 == 0}
+			{numDec(log.out0, token0.decimals)}
+			{token0.name} &lt;-
+			{numDec(log.in1, token1.decimals)}
+			{token1.name}
+		{:else}
+			{numDec(log.in0, token0.decimals)}
+			{token0.name} -&gt;
+			{numDec(log.out1, token1.decimals)}
+			{token1.name}
+		{/if}
 	</div>
 {/each}
+
+<style>
+	.pool_tx {
+		font-family: monospace;
+	}
+</style>

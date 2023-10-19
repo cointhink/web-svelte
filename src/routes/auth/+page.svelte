@@ -11,7 +11,7 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="auth" />
+	<Menubar page_name="Pool" />
 </div>
 
 Logging in... {JSON.stringify(data)}
