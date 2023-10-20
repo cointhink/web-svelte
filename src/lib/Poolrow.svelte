@@ -25,10 +25,9 @@
 {#if loading}
 	<div>Loading..</div>
 {:else}
-	<div id="div">
-		<div>
+	<div class="pools">
+		<div id="pool_name">
 			<div><a href="/pool/{pool.contract_address}"> pool</a></div>
-			pool
 			{pool.token0.symbol}/
 			{pool.token1.symbol}
 			<a href="https://v2.info.uniswap.org/pair/0x{pool.contract_address}">v2</a>
@@ -52,3 +51,12 @@
 		}
 	</style>
 {/if}
+
+<style>
+	.pools {
+		display: flex;
+	}
+	#pool_name {
+		width: 6em;
+	}
+</style>
