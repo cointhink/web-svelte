@@ -11,12 +11,19 @@
 		let height = sparkline_div.offsetHeight;
 		console.log('svg height', height, 'width', width);
 		let sparkline = d3.select(sparkline_div);
-		let svg = sparkline.append('svg').style('background-color', 'grey').attr('height', height);
+		let svg = sparkline
+			.append('svg')
+			.style('background-color', 'grey')
+			.attr('width', width)
+			.attr('height', height);
 
 		const domain = d3.extent(reserves, function (d) {
 			return d.block_number;
 		});
-		const x = d3.scaleLinear().domain(domain).range([0, width]);
+		const x = d3
+			.scaleLinear()
+			.domain(domain)
+			.range([3, width - 3]);
 
 		const y1 = d3
 			.scaleLinear()
@@ -25,7 +32,7 @@
 					return parseFloat(d.x);
 				})
 			)
-			.range([height, 0]);
+			.range([height - 3, 3]);
 
 		const y2 = d3
 			.scaleLinear()
@@ -34,7 +41,7 @@
 					return parseFloat(d.y);
 				})
 			)
-			.range([height, 0]);
+			.range([height - 3, 3]);
 
 		svg.append('g').attr('transform', `translate(0, ${height})`).call(d3.axisBottom(x));
 
@@ -48,12 +55,8 @@
 				'd',
 				d3
 					.line()
-					.x(function (d) {
-						return x(d.block_number);
-					})
-					.y(function (d) {
-						return y1(parseFloat(d.x));
-					})
+					.x((d) => x(d.block_number))
+					.y((d) => y1(parseFloat(d.x)))
 			);
 
 		svg
@@ -73,6 +76,20 @@
 						return y2(parseFloat(d.y));
 					})
 			);
+
+		svg
+			.selectAll('circle')
+			.data(reserves)
+			.enter()
+			.append('circle')
+			.style('stroke', 'gray')
+			.style('fill', 'black')
+			.attr('r', 5)
+			.attr('cx', (d, i) => {
+				console.log('circle at bn', d.block_number, 'x', x(d.block_number));
+				return x(d.block_number);
+			})
+			.attr('cy', 20);
 	});
 </script>
 
