@@ -35,4 +35,5 @@ def extToMime(extension):
     return mime
 
 httpd = HTTPServer(('', 8000), SimpleHTTPRequestHandler)
+print(f'http://{httpd.server_address[0]}:{httpd.server_port}')
 httpd.serve_forever()

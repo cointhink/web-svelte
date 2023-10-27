@@ -7,4 +7,4 @@ format:
 	npm run format
 
 dev:
-	cd build; python ../svelte-simple-server.py
+	python svelte-simple-server.py
