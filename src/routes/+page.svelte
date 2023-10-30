@@ -8,22 +8,31 @@
 
 	//export let data;
 	let pools = [];
+	let pools_count = 0;
 	let loading = true;
 
 	onMount(async () => {
-		pools = await moar(pools);
+		pools = await pools_load();
+		pools_count = await pools_count_load();
+		console.log('pools_counz', pools_count);
 		loading = false;
 	});
 
-	async function moar(pools) {
+	async function pools_load() {
 		const url = PUBLIC_SQL_URL + '/pools?limit=5';
-		pools = await fetch(url).then((ps) => ps.json());
+		const pools = await fetch(url).then((ps) => ps.json());
 		return pools;
+	}
+	async function pools_count_load() {
+		const url = PUBLIC_SQL_URL + '/pools';
+		const resp = await fetch(url, { method: 'HEAD' });
+		const range = resp.headers.get('content-range');
+		return range.split('/')[0].split('-')[1];
 	}
 </script>
 
 <div id="page">
-	<Menubar page_name="liquidity pools" />
+	<Menubar page_name="{pools_count} liquidity pools" />
 
 	{#if loading}
 		Loading...

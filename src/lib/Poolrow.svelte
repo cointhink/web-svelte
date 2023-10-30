@@ -14,7 +14,6 @@
 		await moar(pool);
 
 		reserves = pool.reserves;
-		console.log('pool reserves count', reserves.length);
 		last_reserves = reserves[0];
 		x = last_reserves.x / 10 ** pool.token0.decimals;
 		y = last_reserves.y / 10 ** pool.token1.decimals;

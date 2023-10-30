@@ -9,7 +9,6 @@
 	onMount(() => {
 		let width = sparkline_div.offsetWidth;
 		let height = sparkline_div.offsetHeight;
-		console.log('svg height', height, 'width', width);
 		let sparkline = d3.select(sparkline_div);
 		let svg = sparkline
 			.append('svg')
@@ -86,7 +85,6 @@
 			.style('fill', 'black')
 			.attr('r', 5)
 			.attr('cx', (d, i) => {
-				console.log('circle at bn', d.block_number, 'x', x(d.block_number));
 				return x(d.block_number);
 			})
 			.attr('cy', 20);
