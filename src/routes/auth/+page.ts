@@ -4,7 +4,7 @@ import { browser } from '$app/environment';
 export const load = async ({ fetch, params, url }) => {
 	if (browser) {
 		const token = url.searchParams.get('token');
-		const auth_url = 'https://cointhink.com/api/auth/' + token;
+		const auth_url = PUBLIC_AUTH_URL + '/auth/' + token;
 		console.log(auth_url);
 		const id = await fetch(auth_url).then(async (ps) => ({
 			status: ps.status,

@@ -2,6 +2,7 @@
 	import Poolrow from '$lib/Poolrow.svelte';
 	import Menubar from '$lib/Menubar.svelte';
 	import { onMount } from 'svelte';
+	import { PUBLIC_SQL_URL } from '$env/static/public';
 
 	import type { PageData } from './$types';
 
@@ -15,7 +16,7 @@
 	});
 
 	async function moar(pools) {
-		const url = 'https://cointhink.com/sql/pools?limit=5';
+		const url = PUBLIC_SQL_URL + '/pools?limit=5';
 		console.log(url);
 		pools = await fetch(url).then((ps) => ps.json());
 		return pools;
