@@ -12,12 +12,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         try:
             mime = extToMime(path.suffix)
             print(f"reading {self.path[1:]}")
-            file_to_open = open(self.path[1:]).read()
+            file_to_open = open(self.path[1:], mode="rb").read()
             self.send_response(200)
             self.send_header('Content-type', mime)
             self.end_headers()
-            self.wfile.write(bytes(file_to_open, 'utf-8'))
-        except:
+            self.wfile.write(file_to_open)
+        except Exception as e:
+            print(f"exception {path}: {e}")
             self.send_response(404)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
@@ -32,6 +33,8 @@ def extToMime(extension):
             mime = 'text/html'
         case 'js':
             mime = 'text/javascript'
+        case 'png':
+            mime = 'image/png'
     return mime
 
 httpd = HTTPServer(('', 8000), SimpleHTTPRequestHandler)
