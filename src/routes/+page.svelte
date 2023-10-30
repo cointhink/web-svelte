@@ -17,7 +17,6 @@
 
 	async function moar(pools) {
 		const url = PUBLIC_SQL_URL + '/pools?limit=5';
-		console.log(url);
 		pools = await fetch(url).then((ps) => ps.json());
 		return pools;
 	}

@@ -3,7 +3,10 @@
 	import { moar } from '$lib/pool';
 	import { numDec } from '$lib/util';
 	import { onMount } from 'svelte';
+	import { PUBLIC_SQL_URL } from '$env/static/public';
+
 	export let data;
+
 	let logs = [];
 	let pool = {};
 	let token0 = { decimals: 0 };
@@ -12,10 +15,7 @@
 	onMount(async () => {
 		const topic_swap = 'd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822';
 		const url1 =
-			'https://cointhink.com/sql/logs?address=eq.' +
-			data.params.address +
-			'&topic0=eq.' +
-			topic_swap;
+			PUBLIC_SQL_URL + '/logs?address=eq.' + data.params.address + '&topic0=eq.' + topic_swap;
 		logs = await fetch(url1).then((ps) => ps.json());
 		for (const log of logs) {
 			let dparts = log.data.match(/.{1,64}/g);
@@ -24,7 +24,7 @@
 			log.out0 = parseInt(dparts[2], 16);
 			log.out1 = parseInt(dparts[3], 16);
 		}
-		const url2 = 'https://cointhink.com/sql/pools?contract_address=eq.' + data.params.address;
+		const url2 = PUBLIC_SQL_URL + '/pools?contract_address=eq.' + data.params.address;
 		let pools = await fetch(url2).then((ps) => ps.json());
 		pool = pools[0];
 		await moar(pool);
@@ -34,7 +34,7 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="auth" />
+	<Menubar page_name="pool" />
 </div>
 
 <div>
