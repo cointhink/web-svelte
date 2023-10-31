@@ -4,7 +4,7 @@ import pathlib
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        self.path = "/build" + self.path 
+        self.path = "/build" + self.path.split('?')[0] 
         path = pathlib.Path(self.path)
         if path.suffix == '': 
             self.path = '/build/200.html'
