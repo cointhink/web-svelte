@@ -1,5 +1,6 @@
 import type { PageLoad } from './$types';
 import { browser } from '$app/environment';
+import { PUBLIC_AUTH_URL } from '$env/static/public';
 
 export const load = async ({ fetch, params, url }) => {
 	if (browser) {
