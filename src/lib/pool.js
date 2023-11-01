@@ -8,3 +8,8 @@ export async function moar(pool) {
 	const url3 = PUBLIC_SQL_URL + '/coins?contract_address=eq.' + pool.token1;
 	pool.token1 = (await fetch(url3).then((ps) => ps.json()))[0];
 }
+
+export async function latestBlockNumber() {
+	const url = PUBLIC_SQL_URL + '/blocks?order=number.desc&limit=1';
+	return (await fetch(url).then((ps) => ps.json()))[0];
+}
