@@ -11,7 +11,8 @@
 	let pool = {};
 	let token0 = { decimals: 0 };
 	let token1 = { decimals: 0 };
-	let volume = 0;
+	let volume0 = 0;
+	let volume1 = 0;
 
 	onMount(async () => {
 		let lastBlock = await latestBlockNumber();
@@ -22,8 +23,12 @@
 		await moar(pool);
 		token0 = pool.token0;
 		token1 = pool.token1;
-		for (const log in logs) {
-			volume += log.in0 == 0 ? log.in1 : log.in0;
+		for (const log of logs) {
+			if (log.in0 == 0) {
+				volume1 += log.in1;
+			} else {
+				volume0 += log.in0;
+			}
 		}
 	});
 
@@ -62,7 +67,8 @@
 
 <div>
 	{logs.length} logs
-	{volume} volume
+	{util.numDec(volume0, token0.decimals)} volume0
+	{util.numDec(volume1, token0.decimals)} volume1
 </div>
 
 {#each logs as log}
