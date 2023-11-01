@@ -27,9 +27,12 @@
 {:else}
 	<div class="pools">
 		<div id="pool_name">
-			<div><a href="/pool/{pool.contract_address}"> pool</a></div>
-			{pool.token0.symbol}/
-			{pool.token1.symbol}
+			<div>
+				<a href="/pool/{pool.contract_address}">
+					{pool.token0.symbol}/
+					{pool.token1.symbol}
+				</a>
+			</div>
 			<a href="https://v2.info.uniswap.org/pair/0x{pool.contract_address}">v2</a>
 		</div>
 		<div>

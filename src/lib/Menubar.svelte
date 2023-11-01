@@ -17,7 +17,7 @@
 
 <div id="menubar">
 	<div>
-		<a href="/"><span class="logotext"> cointhink </span></a>
+		<a href="/"><span class="logotext"> defihub.markets</span></a>
 	</div>
 
 	<div>{page_name}</div>
