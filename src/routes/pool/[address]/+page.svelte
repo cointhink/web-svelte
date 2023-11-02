@@ -18,18 +18,16 @@
 		let lastBlock = await latestBlockNumber();
 		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
+		for (const log of logs) {
+			volume1 += log.in1;
+			volume0 += log.in0;
+			console.log('volume0', volume0, 'volume1', volume1);
+		}
 		const url2 = PUBLIC_SQL_URL + '/pools?contract_address=eq.' + data.params.address;
 		pool = (await fetch(url2).then((ps) => ps.json()))[0];
 		await moar(pool);
 		token0 = pool.token0;
 		token1 = pool.token1;
-		for (const log of logs) {
-			if (log.in0 == 0) {
-				volume1 += log.in1;
-			} else {
-				volume0 += log.in0;
-			}
-		}
 	});
 
 	async function filtered_logs(address, start_number, stop_number) {
@@ -68,7 +66,7 @@
 <div>
 	{logs.length} logs
 	{util.numDec(volume0, token0.decimals)} volume0
-	{util.numDec(volume1, token0.decimals)} volume1
+	{util.numDec(volume1, token1.decimals)} volume1
 </div>
 
 {#each logs as log}
