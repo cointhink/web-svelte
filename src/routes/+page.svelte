@@ -3,6 +3,7 @@
 	import Menubar from '$lib/Menubar.svelte';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
+	import { latestBlockNumber } from '$lib/pool';
 
 	import type { PageData } from './$types';
 
@@ -10,11 +11,12 @@
 	let pools = [];
 	let pools_count = 0;
 	let loading = true;
+	let lastBlock = { number: null };
 
 	onMount(async () => {
 		pools = await pools_load();
 		pools_count = await pools_count_load();
-		console.log('pools_counz', pools_count);
+		lastBlock = await latestBlockNumber();
 		loading = false;
 	});
 
@@ -32,7 +34,7 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="{pools_count} liquidity pools" />
+	<Menubar page_name="{pools_count} liquidity pools / {lastBlock.number} eth block" />
 
 	{#if loading}
 		Loading...

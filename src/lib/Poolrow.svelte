@@ -45,7 +45,6 @@
 			{pool.token1.symbol}
 			{y.toFixed(1)}
 		</div>
-		<D3Chart {reserves} />
 	</div>
 {/if}
 

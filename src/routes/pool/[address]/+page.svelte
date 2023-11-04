@@ -13,9 +13,9 @@
 	let token1 = { decimals: 0 };
 	let volume0 = 0;
 	let volume1 = 0;
-
+	let lastBlock = {};
 	onMount(async () => {
-		let lastBlock = await latestBlockNumber();
+		lastBlock = await latestBlockNumber();
 		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
 		for (const log of logs) {
@@ -65,8 +65,19 @@
 
 <div>
 	{logs.length} logs
+	{new Date(lastBlock.timestamp * 1000)}
+</div>
+
+<div>
+	24 hours volume:
 	{util.numDec(volume0, token0.decimals)} volume0
 	{util.numDec(volume1, token1.decimals)} volume1
+</div>
+
+<div>
+	fees earned:
+	{util.numDec(volume0 * 0.003, token0.decimals)} volume0
+	{util.numDec(volume1 * 0.003, token1.decimals)} volume1
 </div>
 
 {#each logs as log}
