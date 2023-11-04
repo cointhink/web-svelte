@@ -14,9 +14,13 @@
 	let volume0 = 0;
 	let volume1 = 0;
 	let lastBlock = {};
+	let lastBlockDate = new Date();
+	let startBlockNumber;
+
 	onMount(async () => {
 		lastBlock = await latestBlockNumber();
-		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
+		lastBlockDate = new Date(lastBlock.timestamp * 1000);
+		startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
 		for (const log of logs) {
 			volume1 += log.in1;
@@ -41,7 +45,8 @@
 			'&block_number=gt.' +
 			start_number +
 			'&block_number=lt.' +
-			stop_number;
+			stop_number +
+			'&order=block_number.desc';
 		let logs = await fetch(url1).then((ps) => ps.json());
 		for (const log of logs) {
 			let dparts = log.data.match(/.{1,64}/g);
@@ -64,24 +69,29 @@
 </div>
 
 <div>
-	{logs.length} logs
-	{new Date(lastBlock.timestamp * 1000)}
+	{logs.length} logs in blocks #{lastBlock.number}
+	({lastBlockDate.getFullYear()}-{lastBlockDate.getMonth() + 1}-{lastBlockDate.getDay()}) - #{startBlockNumber}
 </div>
 
 <div>
 	24 hours volume:
-	{util.numDec(volume0, token0.decimals)} volume0
-	{util.numDec(volume1, token1.decimals)} volume1
+	{util.numDec(volume0, token0.decimals)}
+	{token0.name}
+	{util.numDec(volume1, token1.decimals)}
+	{token1.name}
 </div>
 
 <div>
 	fees earned:
-	{util.numDec(volume0 * 0.003, token0.decimals)} volume0
-	{util.numDec(volume1 * 0.003, token1.decimals)} volume1
+	{util.numDec(volume0 * 0.003, token0.decimals)}
+	{token0.name}
+	{util.numDec(volume1 * 0.003, token1.decimals)}
+	{token1.name}
 </div>
 
 {#each logs as log}
 	<div class="pool_tx">
+		#{log.block_number}
 		{#if log.in0 == 0}
 			{util.numDec(log.out0, token0.decimals)}
 			{token0.name} &lt;-
