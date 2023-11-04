@@ -51,9 +51,8 @@
 <style>
 	.pools {
 		display: flex;
-		flex: initial;
+		justify-content: space-between;
 	}
 	#pool_name {
-		width: 6em;
 	}
 </style>
