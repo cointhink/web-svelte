@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { moar } from '$lib/pool';
 	import { onMount } from 'svelte';
 	export let pool;
 
@@ -11,8 +10,6 @@
 	let last_reserves;
 
 	onMount(async () => {
-		await moar(pool);
-
 		reserves = pool.reserves;
 		last_reserves = reserves[0];
 		x = last_reserves.x / 10 ** pool.token0.decimals;
