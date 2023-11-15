@@ -24,9 +24,6 @@
 	async function pools_load() {
 		const url = PUBLIC_API_URL + '/pools/top';
 		const pools = await fetch(url).then((ps) => ps.json());
-		for (const pool of pools) {
-			await moar(pool);
-		}
 		return pools;
 	}
 
