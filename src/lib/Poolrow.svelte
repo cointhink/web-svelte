@@ -15,6 +15,10 @@
 
 		loading = false;
 	});
+
+	function decimal_display(value, decimals, display) {
+		return (value / 10 ** decimals).toFixed(display);
+	}
 </script>
 
 {#if loading}
@@ -35,18 +39,21 @@
 			{pool.coin0.symbol}
 		</div>
 		<div>
-			sum0: {pool.sum0}
+			sum0:
+			{decimal_display(pool.sum0, pool.coin0.decimals, 4)}
 			{pool.coin0.symbol}
 		</div>
 		<div>
-			sum1: {pool.sum1}
+			sum1:
+			{decimal_display(pool.sum1, pool.coin1.decimals, 4)}
 			{pool.coin1.symbol}
 		</div>
 		<div>
-			reserves: {pool.coin0.symbol}
-			{x.toFixed(1)}
+			reserves:
+			{decimal_display(pool.reserve.x, pool.coin0.decimals, 1)}
+			{pool.coin0.symbol}
+			{decimal_display(pool.reserve.y, pool.coin0.decimals, 1)}
 			{pool.coin1.symbol}
-			{y.toFixed(1)}
 		</div>
 	</div>
 {/if}
