@@ -42,11 +42,16 @@
 			sum0:
 			{decimal_display(pool.sum0, pool.coin0.decimals, 4)}
 			{pool.coin0.symbol}
+			({decimal_display(pool.sum0_eth, pool.coin0.decimals, 4)} ETH)
 		</div>
 		<div>
 			sum1:
-			{decimal_display(pool.sum1, pool.coin1.decimals, 4)}
+			{decimal_display(pool.sum1, 18, 4)}
 			{pool.coin1.symbol}
+			({decimal_display(pool.sum1_eth, 18, 4)} ETH)
+		</div>
+		<div>
+			sum: ({decimal_display(pool.sum_eth, 18, 4)} ETH)
 		</div>
 		<div>
 			reserves:
