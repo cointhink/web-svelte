@@ -1,6 +1,6 @@
 <script>
 	import Menubar from '$lib/Menubar.svelte';
-	import { moar, latestBlockNumber } from '$lib/pool';
+	import { moar, latestBlock } from '$lib/pool';
 	import * as util from '$lib/util';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
@@ -18,7 +18,7 @@
 	let startBlockNumber;
 
 	onMount(async () => {
-		lastBlock = await latestBlockNumber();
+		lastBlock = await latestBlock();
 		lastBlockDate = new Date(lastBlock.timestamp * 1000);
 		startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
