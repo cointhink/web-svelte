@@ -43,6 +43,7 @@
 	#menubar {
 		display: flex;
 		justify-content: space-between;
+		padding-bottom: 0.5em;
 	}
 	.logotext {
 		font-family: 'Montserrat', sans-serif;

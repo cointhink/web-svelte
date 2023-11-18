@@ -28,37 +28,37 @@
 		<div id="pool_name">
 			<div>
 				<a href="/pool/{pool.contract_address}">
-					{pool.coin0.symbol}/
-					{pool.coin1.symbol}
+					{pool.coin0.symbol}/{pool.coin1.symbol}
 				</a>
 			</div>
-			<a href="https://v2.info.uniswap.org/pair/0x{pool.contract_address}">v2</a>
 		</div>
-		<div>
-			price: {(x / y).toFixed(4)}
-			{pool.coin0.symbol}
-		</div>
-		<div>
-			sum0:
-			{decimal_display(pool.sum0, pool.coin0.decimals, 4)}
-			{pool.coin0.symbol}
-			({decimal_display(pool.sum0_eth, pool.coin0.decimals, 4)} ETH)
-		</div>
-		<div>
-			sum1:
-			{decimal_display(pool.sum1, 18, 4)}
-			{pool.coin1.symbol}
-			({decimal_display(pool.sum1_eth, 18, 4)} ETH)
-		</div>
-		<div>
-			sum: ({decimal_display(pool.sum_eth, 18, 4)} ETH)
-		</div>
-		<div>
-			reserves:
-			{decimal_display(pool.reserve.x, pool.coin0.decimals, 1)}
-			{pool.coin0.symbol}
-			{decimal_display(pool.reserve.y, pool.coin0.decimals, 1)}
-			{pool.coin1.symbol}
+		<div id="pool_right_half">
+			<div>
+				price: {(x / y).toFixed(4)}
+				{pool.coin0.symbol}
+			</div>
+			<div>
+				sum0:
+				{decimal_display(pool.sum0, pool.coin0.decimals, 4)}
+				{pool.coin0.symbol}
+				({decimal_display(pool.sum0_eth, pool.coin0.decimals, 4)} ETH)
+			</div>
+			<div>
+				sum1:
+				{decimal_display(pool.sum1, 18, 4)}
+				{pool.coin1.symbol}
+				({decimal_display(pool.sum1_eth, 18, 4)} ETH)
+			</div>
+			<div>
+				sum: {decimal_display(pool.sum_eth, 18, 4)} ETH
+			</div>
+			<div>
+				reserves:
+				{decimal_display(pool.reserve.x, pool.coin0.decimals, 1)}
+				{pool.coin0.symbol}
+				{decimal_display(pool.reserve.y, pool.coin0.decimals, 1)}
+				{pool.coin1.symbol}
+			</div>
 		</div>
 	</div>
 {/if}
@@ -66,8 +66,10 @@
 <style>
 	.pools {
 		display: flex;
-		justify-content: space-between;
+		padding-bottom: 0.5em;
+		/* justify-content: space-between;*/
 	}
 	#pool_name {
+		width: 12em;
 	}
 </style>

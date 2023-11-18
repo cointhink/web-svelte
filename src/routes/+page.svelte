@@ -36,7 +36,7 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="{pools_count} liquidity pools / {lastBlock.number} eth block" />
+	<Menubar page_name="{pools_count} uniswap v2 liquidity pools / {lastBlock.number} eth block" />
 
 	{#if loading}
 		Loading...
