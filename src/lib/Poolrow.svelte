@@ -32,29 +32,29 @@
 		</div>
 		<div id="pool_right_half">
 			<div>
-				price: {util.decimal_display(x / y, pool.coin1.decimals, 4)}
+				price: {util.decimal_display(x / y, 0, 4)}
 				{pool.coin1.symbol}
 			</div>
 			<div>
 				sum0:
-				{util.decimal_display(pool.sum0, pool.coin0.decimals, 4)}
+				{util.bigint_display(pool.sum0, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
-				({util.decimal_display(pool.sum0_eth, 18, 4)} ETH)
+				({util.bigint_display(pool.sum0_eth, 18, 4)} ETH)
 			</div>
 			<div>
 				sum1:
-				{util.decimal_display(pool.sum1, pool.coin1.decimals, 4)}
+				{util.bigint_display(pool.sum1, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
-				({util.decimal_display(pool.sum1_eth, 18, 4)} ETH)
+				({util.bigint_display(pool.sum1_eth, 18, 4)} ETH)
 			</div>
 			<div>
-				sum: {util.decimal_display(pool.sum_eth, 18, 4)} ETH
+				sum: {util.bigint_display(pool.sum_eth, 18, 4)} ETH
 			</div>
 			<div>
 				reserves:
-				{util.decimal_display(pool.reserve.x, pool.coin0.decimals, 4)}
+				{util.bigint_display(pool.reserve.x, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
-				{util.decimal_display(pool.reserve.y, pool.coin0.decimals, 4)}
+				{util.bigint_display(pool.reserve.y, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
 				#{pool.reserve.block_number}
 			</div>

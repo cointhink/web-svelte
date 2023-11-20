@@ -3,6 +3,28 @@ export function numDec(num, dec) {
 	return value.toFixed(dec);
 }
 
+export function bigint_display(value, decimals, display) {
+	console.log('bigint_display', 'value', value, 'decimals', decimals, 'display', display);
+	let intstr = '' + BigInt(value);
+	let decstr;
+	let over_decimals = intstr.length - decimals;
+	if (over_decimals > 0) {
+		decstr = intstr.slice(0, over_decimals) + '.' + intstr.slice(over_decimals);
+	} else {
+		decstr = '0.' + '0'.repeat(-1 * over_decimals) + intstr;
+	}
+	console.log(
+		'bigint_display',
+		'intstr(' + intstr.length + ')',
+		intstr,
+		'over_decimals',
+		over_decimals,
+		'decstr',
+		decstr
+	);
+	return decstr;
+}
+
 export function decimal_display(value, decimals, display) {
 	let scaled = value / 10 ** decimals;
 	let readout;
