@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import * as util from '$lib/util';
+	import D3Chart from './D3Chart.svelte';
+
 	export let pool;
 
-	import D3Chart from './D3Chart.svelte';
 	let loading = true;
 	let x;
 	let y;
@@ -15,10 +17,6 @@
 
 		loading = false;
 	});
-
-	function decimal_display(value, decimals, display) {
-		return (value / 10 ** decimals).toFixed(display);
-	}
 </script>
 
 {#if loading}
@@ -34,30 +32,31 @@
 		</div>
 		<div id="pool_right_half">
 			<div>
-				price: {(x / y).toFixed(4)}
-				{pool.coin0.symbol}
+				price: {util.decimal_display(x / y, pool.coin1.decimals, 4)}
+				{pool.coin1.symbol}
 			</div>
 			<div>
 				sum0:
-				{decimal_display(pool.sum0, pool.coin0.decimals, 4)}
+				{util.decimal_display(pool.sum0, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
-				({decimal_display(pool.sum0_eth, 18, 4)} ETH)
+				({util.decimal_display(pool.sum0_eth, 18, 4)} ETH)
 			</div>
 			<div>
 				sum1:
-				{decimal_display(pool.sum1, pool.coin1.decimals, 4)}
+				{util.decimal_display(pool.sum1, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
-				({decimal_display(pool.sum1_eth, 18, 4)} ETH)
+				({util.decimal_display(pool.sum1_eth, 18, 4)} ETH)
 			</div>
 			<div>
-				sum: {decimal_display(pool.sum_eth, 18, 4)} ETH
+				sum: {util.decimal_display(pool.sum_eth, 18, 4)} ETH
 			</div>
 			<div>
 				reserves:
-				{decimal_display(pool.reserve.x, pool.coin0.decimals, 1)}
+				{util.decimal_display(pool.reserve.x, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
-				{decimal_display(pool.reserve.y, pool.coin0.decimals, 1)}
+				{util.decimal_display(pool.reserve.y, pool.coin0.decimals, 4)}
 				{pool.coin1.symbol}
+				#{pool.reserve.block_number}
 			</div>
 		</div>
 	</div>
