@@ -32,7 +32,7 @@
 		</div>
 		<div id="pool_right_half">
 			<div>
-				price: {util.decimal_display(x / y, 0, 4)}
+				price: {util.decimal_display(y / x, 0, 4)}
 				{pool.coin1.symbol}
 			</div>
 			<div>

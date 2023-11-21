@@ -1,9 +1,10 @@
 <script>
 	import Menubar from '$lib/Menubar.svelte';
-	import { moar, latestBlock } from '$lib/pool';
+	import { pool_extra, block, latestBlock } from '$lib/pool';
 	import * as util from '$lib/util';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
+	import date from 'date-and-time';
 
 	export let data;
 
@@ -13,23 +14,23 @@
 	let token1 = { decimals: 0 };
 	let volume0 = 0;
 	let volume1 = 0;
-	let lastBlock = {};
-	let lastBlockDate = new Date();
-	let startBlockNumber;
+	let lastBlock = { datestr: '' };
+	let startBlock = { datestr: '' };
 
 	onMount(async () => {
 		lastBlock = await latestBlock();
-		lastBlockDate = new Date(lastBlock.timestamp * 1000);
-		startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
+		lastBlock.datestr = date.format(lastBlock.date, 'YYYY-MM-DD HH:mm:ss');
+		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
+		startBlock = await block(startBlockNumber);
+		startBlock.datestr = date.format(startBlock.date, 'YYYY-MM-DD HH:mm:ss');
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
 		for (const log of logs) {
 			volume1 += log.in1;
 			volume0 += log.in0;
-			console.log('volume0', volume0, 'volume1', volume1);
 		}
 		const url2 = PUBLIC_SQL_URL + '/pools?contract_address=eq.' + data.params.address;
 		pool = (await fetch(url2).then((ps) => ps.json()))[0];
-		await moar(pool);
+		await pool_extra(pool);
 		token0 = pool.token0;
 		token1 = pool.token1;
 	});
@@ -60,33 +61,33 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="pool" />
+	<Menubar page_name="Pool 0x{data.params.address}" />
 </div>
 
 <div>
-	{token0.name}/{token1.name}
-	{data.params.address}
+	{token0.name}({token0.symbol})/{token1.name}({token1.symbol})
 </div>
 
 <div>
-	{logs.length} logs in blocks #{lastBlock.number}
-	({lastBlockDate.getFullYear()}-{lastBlockDate.getMonth() + 1}-{lastBlockDate.getDay()}) - #{startBlockNumber}
+	{logs.length} logs for blocks #{startBlock.number}
+	({startBlock.datestr}) - #{lastBlock.number}
+	({lastBlock.datestr})
 </div>
 
 <div>
 	24 hours volume:
 	{util.numDec(volume0, token0.decimals)}
-	{token0.name}
+	{token0.symbol}
 	{util.numDec(volume1, token1.decimals)}
-	{token1.name}
+	{token1.symbol}
 </div>
 
 <div>
 	fees earned:
 	{util.numDec(volume0 * 0.003, token0.decimals)}
-	{token0.name}
+	{token0.symbol}
 	{util.numDec(volume1 * 0.003, token1.decimals)}
-	{token1.name}
+	{token1.symbol}
 </div>
 
 {#each logs as log}
@@ -94,14 +95,14 @@
 		#{log.block_number}
 		{#if log.in0 == 0}
 			{util.numDec(log.out0, token0.decimals)}
-			{token0.name} &lt;-
+			{token0.symbol} &lt;-
 			{util.numDec(log.in1, token1.decimals)}
-			{token1.name}
+			{token1.symbol}
 		{:else}
 			{util.numDec(log.in0, token0.decimals)}
-			{token0.name} -&gt;
+			{token0.symbol} -&gt;
 			{util.numDec(log.out1, token1.decimals)}
-			{token1.name}
+			{token1.symbol}
 		{/if}
 	</div>
 {/each}

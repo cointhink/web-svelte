@@ -3,7 +3,6 @@
 	import Menubar from '$lib/Menubar.svelte';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
-	import { moar } from '$lib/pool';
 
 	import type { PageData } from './$types';
 
