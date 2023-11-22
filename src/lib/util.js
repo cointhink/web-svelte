@@ -9,9 +9,13 @@ export function bigint_display(value, decimals, display) {
 	let decstr;
 	let over_decimals = intstr.length - decimals;
 	if (over_decimals > 0) {
-		decstr = intstr.slice(0, over_decimals) + '.' + intstr.slice(over_decimals);
+		let display_decimals = display - over_decimals;
+		decstr = intstr.slice(0, over_decimals);
+		if (display_decimals > 0) {
+			decstr = decstr + '.' + intstr.slice(over_decimals, over_decimals + display_decimals);
+		}
 	} else {
-		decstr = '0.' + '0'.repeat(-1 * over_decimals) + intstr;
+		decstr = '0.' + '0'.repeat(-1 * over_decimals) + intstr.slice(0, display);
 	}
 	console.log(
 		'bigint_display',
