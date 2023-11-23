@@ -8,7 +8,7 @@
 
 	//export let data;
 	let pools = [];
-	let pools_count = 0;
+	let pools_count = '...';
 	let loading = true;
 
 	onMount(async () => {
@@ -32,12 +32,12 @@
 </script>
 
 <div id="page">
-	<Menubar page_name="{pools_count} uniswap v2 liquidity pools" />
+	<Menubar page_name="{pools_count} Uniswap v2 pools" />
 
 	{#if loading}
 		Loading...
 	{:else}
-		{pools.length} pools Uniswap V2
+		Top {pools.length} Uniswap v2 pools by 24 hour volume
 		{#each pools as pool}
 			<Poolrow {pool} />
 		{/each}

@@ -36,22 +36,22 @@
 				{pool.coin1.symbol}
 			</div>
 			<div>
-				sum0:
+				buys:
 				{util.bigint_display(pool.sum0, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
 				({util.bigint_display(pool.sum0_eth, 18, 4)} ETH)
 			</div>
 			<div>
-				sum1:
+				sells:
 				{util.bigint_display(pool.sum1, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
 				({util.bigint_display(pool.sum1_eth, 18, 4)} ETH)
 			</div>
 			<div>
-				sum: {util.bigint_display(pool.sum_eth, 18, 4)} ETH
+				24hr volume: {util.bigint_display(pool.sum_eth, 18, 4)} ETH
 			</div>
 			<div>
-				reserves:
+				pool reserves:
 				{util.bigint_display(pool.reserve.x, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
 				{util.bigint_display(pool.reserve.y, pool.coin1.decimals, 4)}
