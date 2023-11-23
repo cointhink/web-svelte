@@ -4,7 +4,6 @@ export function numDec(num, dec) {
 }
 
 export function bigint_display(value, decimals, display) {
-	console.log('bigint_display', 'value', value, 'decimals', decimals, 'display', display);
 	let intstr = '' + BigInt(value);
 	let decstr;
 	let over_decimals = intstr.length - decimals;
@@ -17,15 +16,6 @@ export function bigint_display(value, decimals, display) {
 	} else {
 		decstr = '0.' + '0'.repeat(-1 * over_decimals) + intstr.slice(0, display);
 	}
-	console.log(
-		'bigint_display',
-		'intstr(' + intstr.length + ')',
-		intstr,
-		'over_decimals',
-		over_decimals,
-		'decstr',
-		decstr
-	);
 	return decstr;
 }
 

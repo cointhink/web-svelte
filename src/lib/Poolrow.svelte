@@ -8,15 +8,38 @@
 	let loading = true;
 	let x;
 	let y;
-	let reserves;
-	let last_reserves;
+	let flipped;
+	let coin0;
+	let coin1;
+	let price;
 
 	onMount(async () => {
 		x = pool.reserve.x / 10 ** pool.coin0.decimals;
 		y = pool.reserve.y / 10 ** pool.coin1.decimals;
 
+		flipped = pool.coin0.symbol == 'WETH';
+		flipstate();
+
 		loading = false;
 	});
+
+	function flip() {
+		flipped = flipped ? false : true;
+		flipstate();
+	}
+
+	function flipstate() {
+		console.log('flipped', flipped);
+		if (flipped) {
+			coin0 = pool.coin1;
+			coin1 = pool.coin0;
+			price = util.decimal_display(x / y, 0, 4);
+		} else {
+			coin0 = pool.coin0;
+			coin1 = pool.coin1;
+			price = util.decimal_display(y / x, 0, 4);
+		}
+	}
 </script>
 
 {#if loading}
@@ -26,14 +49,16 @@
 		<div id="pool_name">
 			<div>
 				<a href="/pool/{pool.contract_address}">
-					{pool.coin0.symbol}/{pool.coin1.symbol}
+					{coin0.symbol}/{coin1.symbol}
 				</a>
 			</div>
 		</div>
 		<div id="pool_right_half">
 			<div>
-				price: {util.decimal_display(y / x, 0, 4)}
-				{pool.coin1.symbol}
+				price: <span role="button" on:click={flip} on:keypress={flip} tabindex="0">
+					{price}
+					{coin1.symbol}</span
+				>
 			</div>
 			<div>
 				buys:
