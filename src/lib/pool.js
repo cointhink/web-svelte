@@ -19,7 +19,7 @@ export async function reserves(contract_address) {
 		'/reserves?contract_address=eq.' +
 		contract_address +
 		'&order=block_number.desc&limit=1';
-	return await fetch(url).then((ps) => ps.json());
+	return (await fetch(url).then((ps) => ps.json()))[0];
 }
 
 export async function pool(contract_address) {
