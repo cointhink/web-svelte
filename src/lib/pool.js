@@ -1,16 +1,35 @@
-import { PUBLIC_SQL_URL } from '$env/static/public';
+import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
 
-export async function pool_extra(pool) {
+export async function pools_load() {
+	const url = PUBLIC_API_URL + '/pools/top';
+	const pools = await fetch(url).then((ps) => ps.json());
+	return pools;
+}
+
+export async function pools_count_load() {
+	const url = PUBLIC_SQL_URL + '/pools';
+	const resp = await fetch(url, { method: 'HEAD' });
+	const range = resp.headers.get('content-range');
+	return range.split('/')[0].split('-')[1];
+}
+
+export async function reserves(contract_address) {
 	const url =
 		PUBLIC_SQL_URL +
 		'/reserves?contract_address=eq.' +
-		pool.contract_address +
+		contract_address +
 		'&order=block_number.desc&limit=1';
-	pool.reserves = await fetch(url).then((ps) => ps.json());
-	const url2 = PUBLIC_SQL_URL + '/coins?contract_address=eq.' + pool.token0;
-	pool.token0 = (await fetch(url2).then((ps) => ps.json()))[0];
-	const url3 = PUBLIC_SQL_URL + '/coins?contract_address=eq.' + pool.token1;
-	pool.token1 = (await fetch(url3).then((ps) => ps.json()))[0];
+	return await fetch(url).then((ps) => ps.json());
+}
+
+export async function pool(contract_address) {
+	const url2 = PUBLIC_SQL_URL + '/pools?contract_address=eq.' + contract_address;
+	return (await fetch(url2).then((ps) => ps.json()))[0];
+}
+
+export async function coin(contract_address) {
+	const url2 = PUBLIC_SQL_URL + '/coins?contract_address=eq.' + contract_address;
+	return (await fetch(url2).then((ps) => ps.json()))[0];
 }
 
 export async function latestBlock() {

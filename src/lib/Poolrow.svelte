@@ -61,22 +61,23 @@
 				>
 			</div>
 			<div>
-				buys:
-				{util.bigint_display(pool.sum0, pool.coin0.decimals, 4)}
-				{pool.coin0.symbol}
-				({util.bigint_display(pool.sum0_eth, 18, 4)} ETH)
+				Fee revenue: {util.bigint_display(pool.sum_eth * 0.003, 18, 4)} ETH 24hr volume: {util.bigint_display(
+					pool.sum_eth,
+					18,
+					4
+				)} ETH.
 			</div>
 			<div>
-				sells:
+				Buys:
+				{util.bigint_display(pool.sum0, pool.coin0.decimals, 4)}
+				{pool.coin0.symbol}
+				({util.bigint_display(pool.sum0_eth, 18, 4)} ETH) Sells:
 				{util.bigint_display(pool.sum1, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
 				({util.bigint_display(pool.sum1_eth, 18, 4)} ETH)
 			</div>
 			<div>
-				24hr volume: {util.bigint_display(pool.sum_eth, 18, 4)} ETH
-			</div>
-			<div>
-				pool reserves:
+				Pool reserves:
 				{util.bigint_display(pool.reserve.x, pool.coin0.decimals, 4)}
 				{pool.coin0.symbol}
 				{util.bigint_display(pool.reserve.y, pool.coin1.decimals, 4)}

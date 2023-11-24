@@ -1,6 +1,6 @@
 <script>
 	import Menubar from '$lib/Menubar.svelte';
-	import { pool_extra, block, latestBlock } from '$lib/pool';
+	import * as poollib from '$lib/pool';
 	import * as util from '$lib/util';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
@@ -18,21 +18,20 @@
 	let startBlock = { datestr: '' };
 
 	onMount(async () => {
-		lastBlock = await latestBlock();
+		lastBlock = await poollib.latestBlock();
 		lastBlock.datestr = date.format(lastBlock.date, 'YYYY-MM-DD HH:mm:ss');
 		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
-		startBlock = await block(startBlockNumber);
+		startBlock = await poollib.block(startBlockNumber);
 		startBlock.datestr = date.format(startBlock.date, 'YYYY-MM-DD HH:mm:ss');
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
 		for (const log of logs) {
 			volume1 += log.in1;
 			volume0 += log.in0;
 		}
-		const url2 = PUBLIC_SQL_URL + '/pools?contract_address=eq.' + data.params.address;
-		pool = (await fetch(url2).then((ps) => ps.json()))[0];
-		await pool_extra(pool);
-		token0 = pool.token0;
-		token1 = pool.token1;
+		pool = await poollib.pool(data.params.address);
+		pool.reserves = await poollib.reserves(pool.contract_address);
+		token0 = await poollib.coin(pool.token0);
+		token1 = await poollib.coin(pool.token1);
 	});
 
 	async function filtered_logs(address, start_number, stop_number) {
