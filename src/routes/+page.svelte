@@ -29,9 +29,17 @@
 	{#if loading}
 		Loading...
 	{:else}
-		Top {pools.length} Uniswap v2 pools by 24 hour fee revenue/volume
+		<div id="title">
+			Top {pools.length} Uniswap v2 pools by 24 hour fee revenue (0.3% of volume)
+		</div>
 		{#each pools as pool}
 			<Poolrow {pool} {usdc_rate} />
 		{/each}
 	{/if}
 </div>
+
+<style>
+	#title {
+		padding: 0.5em 0;
+	}
+</style>
