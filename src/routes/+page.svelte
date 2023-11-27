@@ -12,9 +12,11 @@
 	let pools = [];
 	let pools_count = '...';
 	let usdc_rate;
+	let lastBlock;
 	let loading = true;
 
 	onMount(async () => {
+		lastBlock = await pool.latestBlock();
 		pools = await pool.pools_load();
 		pools_count = await pool.pools_count_load();
 		let usdc_reserves = await pool.reserves('b4e16d0168e52d35cacd2c6185b44281ec28c9dc');
@@ -35,6 +37,15 @@
 		{#each pools as pool}
 			<Poolrow {pool} {usdc_rate} />
 		{/each}
+	{/if}
+</div>
+
+<div>
+	{#if lastBlock}
+		<div>
+			synced to eth block #{lastBlock.number}
+			{lastBlock.date}
+		</div>
 	{/if}
 </div>
 
