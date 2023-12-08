@@ -13,6 +13,7 @@
 		const response = await fetch(url, { method: 'POST' });
 		const json = await response.json();
 		console.log('handleOnSubmit', json);
+		form_state = 'done';
 		return false;
 	}
 </script>
@@ -33,6 +34,9 @@
 			{/if}
 			{#if form_state == 'submit'}
 				<div>Submitting...</div>
+			{/if}
+			{#if form_state == 'done'}
+				<div>Email sent.</div>
 			{/if}
 		</form>
 	</div>
