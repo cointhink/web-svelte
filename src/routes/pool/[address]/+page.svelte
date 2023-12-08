@@ -68,7 +68,7 @@
 </div>
 
 <div>
-	{logs.length} logs for blocks #{startBlock.number}
+	{logs.length} swaps for blocks #{startBlock.number}
 	({startBlock.datestr}) - #{lastBlock.number}
 	({lastBlock.datestr})
 </div>
