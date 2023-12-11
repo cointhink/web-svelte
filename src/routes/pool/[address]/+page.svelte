@@ -18,20 +18,22 @@
 	let startBlock = { datestr: '' };
 
 	onMount(async () => {
+		pool = await poollib.pool(data.params.address);
+		pool.reserves = await poollib.reserves(pool.contract_address);
+		token0 = await poollib.coin(pool.token0);
+		token1 = await poollib.coin(pool.token1);
+
 		lastBlock = await poollib.latestBlock();
 		lastBlock.datestr = date.format(lastBlock.date, 'YYYY-MM-DD HH:mm:ss');
 		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
 		startBlock = await poollib.block(startBlockNumber);
 		startBlock.datestr = date.format(startBlock.date, 'YYYY-MM-DD HH:mm:ss');
+
 		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
 		for (const log of logs) {
 			volume1 += log.in1;
 			volume0 += log.in0;
 		}
-		pool = await poollib.pool(data.params.address);
-		pool.reserves = await poollib.reserves(pool.contract_address);
-		token0 = await poollib.coin(pool.token0);
-		token1 = await poollib.coin(pool.token1);
 	});
 
 	async function filtered_logs(address, start_number, stop_number) {
