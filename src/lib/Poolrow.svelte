@@ -83,7 +83,8 @@
 				{pool.coin0.symbol}
 				{util.bigint_display(pool.reserve.y, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
-				#{pool.reserve.block_number}
+				(stddev {util.bigint_display(pool.reserve_summary.stddev, 18, 4)} from {pool.reserve_summary
+					.count} samples)
 			</div>
 			<div>
 				1 {coin0.symbol} =
