@@ -12,8 +12,8 @@
 	let flipped;
 	let coin0;
 	let coin1;
-	let price;
-	let price_usd;
+	let price_eth;
+	let usd1_lp_revenue;
 
 	onMount(async () => {
 		x = pool.reserve.x / 10 ** pool.coin0.decimals;
@@ -21,8 +21,6 @@
 
 		flipped = pool.coin0.symbol == 'WETH';
 		flipstate();
-		console.log('usdc', usdc_rate);
-		console.log('pool', pool);
 
 		loading = false;
 	});
@@ -33,17 +31,20 @@
 	}
 
 	function flipstate() {
+		let usd1_eth = 1 / usdc_rate;
 		if (flipped) {
 			coin0 = pool.coin1;
 			coin1 = pool.coin0;
-			price = util.decimal_display(x / y, 0, 4);
-			price_usd = util.decimal_display((x / y) * usdc_rate, 0, 2);
+			price_eth = x / y;
 		} else {
 			coin0 = pool.coin0;
 			coin1 = pool.coin1;
-			price = util.decimal_display(y / x, 0, 4);
-			price_usd = util.decimal_display((y / x) * usdc_rate, 0, 2);
+			price_eth = y / x;
 		}
+		usd1_lp_revenue =
+			pool.sum_eth *
+			0.003 *
+			((0.5 * usd1_eth * price_eth) / pool.reserve.x + (0.5 * usd1_eth) / pool.reserve.y);
 	}
 </script>
 
@@ -62,11 +63,7 @@
 			<div>
 				24hr $1 LP revenue:
 				<span>
-					{util.decimal_display(
-						pool.sum_eth * 0.003 * usdc_rate * (1 / 2 / pool.reserve.x + 1 / 2 / pool.reserve.y),
-						18,
-						2
-					)} USD
+					{util.decimal_display(usd1_lp_revenue, 18, 2)} USD
 				</span>
 			</div>
 			<div>
@@ -98,10 +95,10 @@
 			<div>
 				1 {coin0.symbol} =
 				<span>
-					{price_usd} USD
+					{util.decimal_display(price_eth * usdc_rate, 0, 2)} USD
 				</span>
 				<span role="button" on:click={flip} on:keypress={flip} tabindex="0">
-					{price}
+					{util.decimal_display(price_eth, 0, 4)}
 					{coin1.symbol}
 				</span>
 				(stddev {util.bigint_display(pool.reserve_summary.stddev, 18, 4)} from {pool.reserve_summary

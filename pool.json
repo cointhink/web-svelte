@@ -1,0 +1,38 @@
+{
+  "contract_address": "09d1d767edf8fa23a64c51fa559e0688e526812f",
+  "token0": "0001a500a6b18995b03f44bb040a5ffc28e45cb0",
+  "token1": "c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "reserve": {
+    "block_number": 18832944,
+    "x": "1519253943545690445685991",
+    "y": "3355490482958551250969"
+  },
+  "coin0": {
+    "contract_address": "0001a500a6b18995b03f44bb040a5ffc28e45cb0",
+    "name": "Autonolas",
+    "symbol": "OLAS",
+    "decimals": 18
+  },
+  "coin1": {
+    "contract_address": "c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "name": "Wrapped Ether",
+    "symbol": "WETH",
+    "decimals": 18
+  },
+  "count0": 559,
+  "count1": 1963,
+  "reserve_summary": {
+    "start_block_number": 18815668,
+    "stop_block_number": 18832948,
+    "dependent_variable": "x",
+    "count": 2254,
+    "stddev": "54152075359286489962863",
+    "min": "1342843507053286023726258",
+    "max": "1575759374700749631730407"
+  },
+  "sum0": "1454071410752678337131560",
+  "sum0_eth": "3382971637505050395874",
+  "sum1": "3126139857450030733155",
+  "sum1_eth": "3126139857450030733155",
+  "sum_eth": "6509111494955081129029"
+}
