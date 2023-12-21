@@ -14,6 +14,7 @@
 	let coin1;
 	let price_eth;
 	let usd1_lp_revenue;
+	let usd1_eth = 1 / usdc_rate;
 
 	onMount(async () => {
 		x = pool.reserve.x / 10 ** pool.coin0.decimals;
@@ -31,7 +32,6 @@
 	}
 
 	function flipstate() {
-		let usd1_eth = 1 / usdc_rate;
 		if (flipped) {
 			coin0 = pool.coin1;
 			coin1 = pool.coin0;
@@ -44,7 +44,7 @@
 		usd1_lp_revenue =
 			pool.sum_eth *
 			0.003 *
-			((0.5 * usd1_eth * price_eth) / pool.reserve.x + (0.5 * usd1_eth) / pool.reserve.y);
+			((0.5 * usd1_eth * (1 / price_eth)) / pool.reserve.x + (0.5 * usd1_eth) / pool.reserve.y);
 	}
 </script>
 
@@ -61,9 +61,11 @@
 		</div>
 		<div id="pool_right_half">
 			<div>
+				$1 = {util.decimal_display(usd1_eth / price_eth, 0, 5)}
+				{coin0.symbol}
 				24hr $1 LP revenue:
 				<span>
-					{util.decimal_display(usd1_lp_revenue, 18, 2)} USD
+					{util.decimal_display(usd1_lp_revenue, 6, 5)} USD
 				</span>
 			</div>
 			<div>
