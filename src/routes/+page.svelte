@@ -12,6 +12,7 @@
 	let pools = [];
 	let pools_count = '...';
 	let usdc_rate;
+	let usdc_rate_str = '...';
 	let lastBlock;
 	let loading = true;
 
@@ -21,18 +22,19 @@
 		pools_count = await pool.pools_count_load();
 		let usdc_reserves = await pool.reserves('b4e16d0168e52d35cacd2c6185b44281ec28c9dc');
 		usdc_rate = usdc_reserves.x / 10 ** 6 / (usdc_reserves.y / 10 ** 18);
+		usdc_rate_str = usdc_rate.toFixed(2);
 		loading = false;
 	});
 </script>
 
 <div id="page">
-	<Menubar page_name="{pools_count} Uniswap v2 pools" />
+	<Menubar page_name="{pools_count} Uniswap v2 pools | 1 eth ${usdc_rate_str}" />
 
 	{#if loading}
 		Loading...
 	{:else}
 		<div id="title">
-			Top {pools.length} Uniswap v2 pools by 24 hour fee revenue (0.3% of volume)
+			Top {pools.length} Uniswap v2 pools by fee revenue (0.3% of volume)
 		</div>
 		{#each pools as pool}
 			<Poolrow {pool} {usdc_rate} />

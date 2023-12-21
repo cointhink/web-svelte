@@ -91,25 +91,5 @@
 	{token1.symbol}
 </div>
 
-{#each logs as log}
-	<div class="pool_tx">
-		#{log.block_number}
-		{#if log.in0 == 0}
-			{util.numDec(log.out0, token0.decimals)}
-			{token0.symbol} &lt;-
-			{util.numDec(log.in1, token1.decimals)}
-			{token1.symbol}
-		{:else}
-			{util.numDec(log.in0, token0.decimals)}
-			{token0.symbol} -&gt;
-			{util.numDec(log.out1, token1.decimals)}
-			{token1.symbol}
-		{/if}
-	</div>
-{/each}
-
 <style>
-	.pool_tx {
-		font-family: monospace;
-	}
 </style>

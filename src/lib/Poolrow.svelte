@@ -22,6 +22,7 @@
 		flipped = pool.coin0.symbol == 'WETH';
 		flipstate();
 		console.log('usdc', usdc_rate);
+		console.log('pool', pool);
 
 		loading = false;
 	});
@@ -59,7 +60,17 @@
 		</div>
 		<div id="pool_right_half">
 			<div>
-				24hr fee revenue:
+				24hr $1 LP revenue:
+				<span>
+					{util.decimal_display(
+						pool.sum_eth * 0.003 * usdc_rate * (1 / 2 / pool.reserve.x + 1 / 2 / pool.reserve.y),
+						18,
+						2
+					)} USD
+				</span>
+			</div>
+			<div>
+				24hr pool fee revenue:
 				<span>
 					{util.decimal_display(pool.sum_eth * 0.003 * usdc_rate, 18, 2)} USD
 				</span>
@@ -83,8 +94,6 @@
 				{pool.coin0.symbol}
 				{util.bigint_display(pool.reserve.y, pool.coin1.decimals, 4)}
 				{pool.coin1.symbol}
-				(stddev {util.bigint_display(pool.reserve_summary.stddev, 18, 4)} from {pool.reserve_summary
-					.count} samples)
 			</div>
 			<div>
 				1 {coin0.symbol} =
@@ -95,6 +104,8 @@
 					{price}
 					{coin1.symbol}
 				</span>
+				(stddev {util.bigint_display(pool.reserve_summary.stddev, 18, 4)} from {pool.reserve_summary
+					.count} trades)
 			</div>
 		</div>
 	</div>
