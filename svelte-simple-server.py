@@ -11,7 +11,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             path = pathlib.Path(self.path)
         try:
             mime = extToMime(path.suffix)
-            print(f"reading {self.path[1:]}")
             file_to_open = open(self.path[1:], mode="rb").read()
             self.send_response(200)
             self.send_header('Content-type', mime)
