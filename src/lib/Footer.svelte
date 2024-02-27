@@ -5,9 +5,8 @@
 </script>
 
 <div class="disclaimer">
-	Disclaimer: All data is provided "AS IS" - no warranties of any kind are made, including but not
-	limited to accuracy and updatedness. No part of the data constitutes financial advice, legal
-	advice or any other form of advice meant for your specific reliance for any purpose.
+	Disclaimer: All data is provided "AS IS". Not financial advice, legal advice or any other form of
+	advice meant for your specific reliance for any purpose.
 </div>
 
 <style>
