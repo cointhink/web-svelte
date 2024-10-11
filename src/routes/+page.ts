@@ -1,3 +1,9 @@
 import type { PageLoad } from './$types';
+import { browser } from '$app/environment';
 
-export const load = async ({ fetch, params }) => {};
+export const load = async ({ fetch, params, url }) => {
+	if (browser) {
+		const since = url.searchParams.get('since') || 24;
+		return { since: since };
+	}
+};

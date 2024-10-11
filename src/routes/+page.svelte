@@ -16,9 +16,11 @@
 	let lastBlock;
 	let loading = true;
 
+	export let data;
+
 	onMount(async () => {
 		lastBlock = await pool.latestBlock();
-		pools = await pool.pools_load();
+		pools = await pool.pools_load(data.since);
 		pools_count = await pool.pools_count_load();
 		let usdc_reserves = await pool.reserves('b4e16d0168e52d35cacd2c6185b44281ec28c9dc');
 		usdc_rate = usdc_reserves.x / 10 ** 6 / (usdc_reserves.y / 10 ** 18);

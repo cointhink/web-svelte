@@ -1,7 +1,7 @@
 import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
 
-export async function pools_load() {
-	const url = PUBLIC_API_URL + '/pools/top';
+export async function pools_load(hours) {
+	const url = PUBLIC_API_URL + '/pools/top?since=' + hours;
 	const pools = await fetch(url).then((ps) => ps.json());
 	return pools;
 }
