@@ -36,7 +36,8 @@
 		Loading...
 	{:else}
 		<div id="title">
-			Top {pools.length} Uniswap v2 pools by fee revenue (0.3% of volume)
+			Top {pools.length} Uniswap v2 pools by fee revenue (0.3% of volume) over the last {data.since}
+			hour{data.since > 1 ? 's' : ''}
 		</div>
 		{#each pools as pool}
 			<Poolrow {pool} {usdc_rate} />
