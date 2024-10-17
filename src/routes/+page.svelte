@@ -33,7 +33,7 @@
 	<Menubar page_name="{pools_count} Uniswap v2 pools | 1 eth ${usdc_rate_str}" />
 
 	{#if loading}
-		Loading...
+		<div class="loading">Loading...</div>
 	{:else}
 		<div id="title">
 			Top {pools.length} Uniswap v2 pools by fee revenue (0.3% of volume) over the last {data.since}
@@ -57,5 +57,8 @@
 <style>
 	#title {
 		padding: 0.5em 0;
+	}
+	.loading {
+		padding: 1em;
 	}
 </style>
