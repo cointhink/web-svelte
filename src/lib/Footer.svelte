@@ -6,7 +6,7 @@
 
 <div class="disclaimer">
 	Disclaimer: All data is provided "AS IS". Not financial advice, legal advice or any other form of
-	advice meant for your specific reliance for any purpose.
+	advice meant for specific reliance for any purpose.
 </div>
 
 <style>

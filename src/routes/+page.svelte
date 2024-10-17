@@ -48,7 +48,7 @@
 <div>
 	{#if lastBlock}
 		<div>
-			synced to eth block #{lastBlock.number}
+			Synced to ethereum block #{lastBlock.number}
 			{lastBlock.date}
 		</div>
 	{/if}
@@ -59,6 +59,6 @@
 		padding: 0.5em 0;
 	}
 	.loading {
-		padding: 1em;
+		padding: 1em 0;
 	}
 </style>
