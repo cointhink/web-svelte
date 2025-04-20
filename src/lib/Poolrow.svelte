@@ -95,7 +95,8 @@
 				{pool.coin1.symbol}
 			</div>
 			<div>
-				1 {coin0.symbol} =
+				1
+				<a href="/coin/{coin0.contract_address}">{coin0.symbol}</a> =
 				<span>
 					{util.decimal_display(price_eth * usdc_rate, 0, 2)} USD
 				</span>
