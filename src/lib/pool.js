@@ -1,5 +1,11 @@
 import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
 
+export async function pools_for(token_contract_address) {
+	const url = PUBLIC_API_URL + '/pools/for?token_contract_address=' + token_contract_address;
+	const pools = await fetch(url).then((ps) => ps.json());
+	return pools;
+}
+
 export async function pools_load(hours) {
 	const url = PUBLIC_API_URL + '/pools/top?since=' + hours;
 	const pools = await fetch(url).then((ps) => ps.json());
