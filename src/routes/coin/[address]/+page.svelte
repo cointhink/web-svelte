@@ -32,7 +32,10 @@
 	Markets
 	{#each pools as pool}
 		<div>
-			{JSON.stringify(pool)}
+			{pool.contract_address}
+			{#if pool.reserves}
+				{pool.reserves.x / pool.reserves.y}
+			{/if}
 		</div>
 	{/each}
 </div>
