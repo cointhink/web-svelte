@@ -27,7 +27,7 @@
 	<Menubar page_name="Coin 0x{data.params.address}" />
 </div>
 
-<div>
+<div class="bigname">
 	{token.name}
 	({token.symbol})
 </div>
@@ -36,19 +36,29 @@
 	{pools.length} Markets
 	{#each pools as pool}
 		<div class="numbers">
+			{#if pool.reserves}
+				{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
+			{/if}
 			0x{pool.contract_address}
 			{#if pool.reserves}
-				{#if pool.token1 == data.params.address}
-					{pool.reserves.x /
-						pool.reserves.y /
-						10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
+				<span class="bigger">
+					{#if pool.token1 == data.params.address}
+						{pool.reserves.x /
+							pool.reserves.y /
+							10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
+						{tokens[pool.token0].symbol}
+					{:else}
+						{pool.reserves.y /
+							pool.reserves.x /
+							10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
+						{tokens[pool.token1].symbol}
+					{/if}
+					inventory:
+					{pool.reserves.x / 10 ** tokens[pool.token0].decimals}
 					{tokens[pool.token0].symbol}
-				{:else}
-					{pool.reserves.y /
-						pool.reserves.x /
-						10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
+					{pool.reserves.y / 10 ** tokens[pool.token1].decimals}
 					{tokens[pool.token1].symbol}
-				{/if}
+				</span>
 			{/if}
 		</div>
 	{/each}
@@ -57,6 +67,11 @@
 <style>
 	.numbers {
 		font-family: monospace;
+	}
+	.bigger {
 		font-size: 110%;
+	}
+	.bigname {
+		margin: 0.5em 0;
 	}
 </style>
