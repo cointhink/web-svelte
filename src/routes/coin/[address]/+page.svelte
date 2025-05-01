@@ -11,6 +11,7 @@
 	let markets = [];
 	let token = {};
 	let tokens = {};
+	let loading = true;
 
 	onMount(async () => {
 		token = await poollib.coin(data.params.address);
@@ -21,6 +22,7 @@
 			tokens[pools[idx].token1] ||= await poollib.coin(pools[idx].token1);
 			pools[idx].reserves = await poollib.reserves(pools[idx].contract_address);
 		}
+		loading = false;
 	});
 </script>
 
@@ -34,7 +36,11 @@
 </div>
 
 <div>
-	{pools.length} Markets
+	{#if loading}
+		loading markets for this coin...
+	{:else}
+		{pools.length} Markets
+	{/if}
 	{#each pools as pool}
 		<div class="numbers">
 			{#if pool.reserves}
@@ -45,13 +51,15 @@
 				<span class="bigger">
 					{#if pool.token1 == data.params.address}
 						<PoolPrice
-							reserves={pool.reserves}
+							reserves_x={pool.reserves.y}
+							reserves_y={pool.reserves.x}
 							token_x={tokens[pool.token0]}
 							token_y={tokens[pool.token1]}
 						/>
 					{:else}
 						<PoolPrice
-							reserves={pool.reserves}
+							reserves_x={pool.reserves.x}
+							reserves_y={pool.reserves.y}
 							token_x={tokens[pool.token1]}
 							token_y={tokens[pool.token0]}
 						/>
