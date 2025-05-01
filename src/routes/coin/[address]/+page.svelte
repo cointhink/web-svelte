@@ -1,5 +1,6 @@
 <script>
 	import Menubar from '$lib/Menubar.svelte';
+	import PoolPrice from '$lib/PoolPrice.svelte';
 	import * as poollib from '$lib/pool';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
@@ -43,15 +44,17 @@
 			{#if pool.reserves}
 				<span class="bigger">
 					{#if pool.token1 == data.params.address}
-						{pool.reserves.x /
-							pool.reserves.y /
-							10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
-						{tokens[pool.token0].symbol}
+						<PoolPrice
+							reserves={pool.reserves}
+							token_x={tokens[pool.token0]}
+							token_y={tokens[pool.token1]}
+						/>
 					{:else}
-						{pool.reserves.y /
-							pool.reserves.x /
-							10 ** (tokens[pool.token1].decimals - tokens[pool.token0].decimals)}
-						{tokens[pool.token1].symbol}
+						<PoolPrice
+							reserves={pool.reserves}
+							token_x={tokens[pool.token1]}
+							token_y={tokens[pool.token0]}
+						/>
 					{/if}
 					inventory:
 					{pool.reserves.x / 10 ** tokens[pool.token0].decimals}
