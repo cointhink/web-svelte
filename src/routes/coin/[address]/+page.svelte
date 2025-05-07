@@ -17,12 +17,12 @@
 		token = await poollib.coin(data.params.address);
 		tokens[data.params.address] = token;
 		pools = await poollib.pools_for(data.params.address);
+		loading = false;
 		for (let idx = 0; idx < pools.length; idx++) {
 			tokens[pools[idx].token0] ||= await poollib.coin(pools[idx].token0);
 			tokens[pools[idx].token1] ||= await poollib.coin(pools[idx].token1);
 			pools[idx].reserves = await poollib.reserves(pools[idx].contract_address);
 		}
-		loading = false;
 	});
 </script>
 
