@@ -24,7 +24,6 @@
 		}
 		zero_length = zero_stop - 1;
 		price_zero_post = price_sigfig.substring(zero_stop + 1, price_sigfig.length);
-		console.log(price, maxSigFigDig, price_zero_pre, zero_length, price_zero_post);
 	}
 </script>
 
