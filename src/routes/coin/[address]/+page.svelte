@@ -17,6 +17,11 @@
 		token = await poollib.coin(data.params.address);
 		tokens[data.params.address] = token;
 		pools = await poollib.pools_for(data.params.address);
+		pools = pools.toSorted((a, b) => {
+			let c = a.token0 == data.params.address ? a.token1 : a.token0;
+			let d = b.token0 == data.params.address ? b.token1 : b.token0;
+			return c == d ? 0 : c < d ? 1 : -1;
+		});
 		loading = false;
 		for (let idx = 0; idx < pools.length; idx++) {
 			tokens[pools[idx].token0] ||= await poollib.coin(pools[idx].token0);
@@ -43,10 +48,10 @@
 	{/if}
 	{#each pools as pool}
 		<div class="numbers">
+			0x{pool.contract_address}
 			{#if pool.reserves}
 				{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
 			{/if}
-			0x{pool.contract_address}
 			{#if pool.reserves}
 				<span class="bigger">
 					{#if pool.token1 == data.params.address}
