@@ -54,7 +54,7 @@ export async function block(number) {
 }
 
 export function group_by(pools, coin_address) {
-	pools.reduce((groups, pool) => {
+	return pools.reduce((groups, pool) => {
 		let token;
 		if (pool.token0 == coin_address) {
 			token = pool.token1;
@@ -69,8 +69,7 @@ export function group_by(pools, coin_address) {
 	}, {});
 }
 
-// forEach((a, b) => {
-// 	let c = a.token0 == data.params.address ? a.token1 : a.token0;
-// 	let d = b.token0 == data.params.address ? b.token1 : b.token0;
-// 	return c == d ? 0 : c < d ? 1 : -1;
-// });
+export function compare_prices(pools) {
+	for (let pair of Generatorics.combination(pools)) {
+	}
+}

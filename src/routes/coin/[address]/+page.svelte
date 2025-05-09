@@ -22,8 +22,10 @@
 
 		groups = poollib.group_by(pools, data.params.address);
 		for (let idx = 0; idx < pools.length; idx++) {
+			// fetch and cache token details
 			tokens[pools[idx].token0] ||= await poollib.coin(pools[idx].token0);
 			tokens[pools[idx].token1] ||= await poollib.coin(pools[idx].token1);
+			// fetch reserves
 			pools[idx].reserves = await poollib.reserves(pools[idx].contract_address);
 		}
 	});
@@ -44,37 +46,39 @@
 	{:else}
 		{pools.length} Markets
 	{/if}
-	{#each pools as pool}
-		<div class="numbers">
-			0x{pool.contract_address}
-			{#if pool.reserves}
-				{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
-			{/if}
-			{#if pool.reserves}
-				<span class="bigger">
-					{#if pool.token1 == data.params.address}
-						<PoolPrice
-							reserves_x={pool.reserves.y}
-							reserves_y={pool.reserves.x}
-							token_x={tokens[pool.token0]}
-							token_y={tokens[pool.token1]}
-						/>
-					{:else}
-						<PoolPrice
-							reserves_x={pool.reserves.x}
-							reserves_y={pool.reserves.y}
-							token_x={tokens[pool.token1]}
-							token_y={tokens[pool.token0]}
-						/>
-					{/if}
-					inventory:
-					{pool.reserves.x / 10 ** tokens[pool.token0].decimals}
-					{tokens[pool.token0].symbol}
-					{pool.reserves.y / 10 ** tokens[pool.token1].decimals}
-					{tokens[pool.token1].symbol}
-				</span>
-			{/if}
-		</div>
+	{#each Object.entries(groups) as [target_address, pools]}
+		{#each pools as pool}
+			<div class="numbers">
+				0x{pool.contract_address}
+				{#if pool.reserves}
+					{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
+				{/if}
+				{#if pool.reserves}
+					<span class="bigger">
+						{#if pool.token1 == data.params.address}
+							<PoolPrice
+								reserves_x={pool.reserves.y}
+								reserves_y={pool.reserves.x}
+								token_x={tokens[pool.token0]}
+								token_y={tokens[pool.token1]}
+							/>
+						{:else}
+							<PoolPrice
+								reserves_x={pool.reserves.x}
+								reserves_y={pool.reserves.y}
+								token_x={tokens[pool.token1]}
+								token_y={tokens[pool.token0]}
+							/>
+						{/if}
+						inventory:
+						{pool.reserves.x / 10 ** tokens[pool.token0].decimals}
+						{tokens[pool.token0].symbol}
+						{pool.reserves.y / 10 ** tokens[pool.token1].decimals}
+						{tokens[pool.token1].symbol}
+					</span>
+				{/if}
+			</div>
+		{/each}
 	{/each}
 </div>
 
