@@ -36,8 +36,14 @@
 </div>
 
 <div class="bigname">
-	{token.name}
-	({token.symbol})
+	{#if loading}
+		loading 0x{data.params.address}
+	{:else if token}
+		{token.name}
+		({token.symbol})
+	{:else}
+		unknown coin 0x{data.params.address}
+	{/if}
 </div>
 
 <div>
