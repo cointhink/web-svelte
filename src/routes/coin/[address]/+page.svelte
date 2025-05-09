@@ -11,18 +11,16 @@
 	let markets = [];
 	let token = {};
 	let tokens = {};
+	let groups = {};
 	let loading = true;
 
 	onMount(async () => {
 		token = await poollib.coin(data.params.address);
 		tokens[data.params.address] = token;
 		pools = await poollib.pools_for(data.params.address);
-		pools = pools.toSorted((a, b) => {
-			let c = a.token0 == data.params.address ? a.token1 : a.token0;
-			let d = b.token0 == data.params.address ? b.token1 : b.token0;
-			return c == d ? 0 : c < d ? 1 : -1;
-		});
 		loading = false;
+
+		groups = poollib.group_by(pools, data.params.address);
 		for (let idx = 0; idx < pools.length; idx++) {
 			tokens[pools[idx].token0] ||= await poollib.coin(pools[idx].token0);
 			tokens[pools[idx].token1] ||= await poollib.coin(pools[idx].token1);

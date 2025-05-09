@@ -1,4 +1,5 @@
 import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
+import Generatorics from 'generatorics';
 
 export async function pools_for(token_contract_address) {
 	const url = PUBLIC_API_URL + '/pools/for?token_contract_address=' + token_contract_address;
@@ -51,3 +52,25 @@ export async function block(number) {
 	block.date = new Date(block.timestamp * 1000);
 	return block;
 }
+
+export function group_by(pools, coin_address) {
+	pools.reduce((groups, pool) => {
+		let token;
+		if (pool.token0 == coin_address) {
+			token = pool.token1;
+		} else {
+			token = pool.token0;
+		}
+		if (!groups[token]) {
+			groups[token] = [];
+		}
+		groups[token].push(pool);
+		return groups;
+	}, {});
+}
+
+// forEach((a, b) => {
+// 	let c = a.token0 == data.params.address ? a.token1 : a.token0;
+// 	let d = b.token0 == data.params.address ? b.token1 : b.token0;
+// 	return c == d ? 0 : c < d ? 1 : -1;
+// });
