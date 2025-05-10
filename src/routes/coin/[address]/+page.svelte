@@ -28,6 +28,8 @@
 			// fetch reserves
 			pools[idx].reserves = await poollib.reserves(pools[idx].contract_address);
 		}
+		// reactivity hack for the last row to render
+		groups = { ...groups };
 	});
 </script>
 
