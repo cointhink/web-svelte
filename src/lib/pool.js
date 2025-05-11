@@ -54,7 +54,7 @@ export async function block(number) {
 }
 
 export function group_by(pools, coin_address) {
-	return pools.reduce((groups, pool) => {
+	let new_pools = pools.reduce((groups, pool) => {
 		let token;
 		if (pool.token0 == coin_address) {
 			token = pool.token1;
@@ -67,6 +67,14 @@ export function group_by(pools, coin_address) {
 		groups[token].push(pool);
 		return groups;
 	}, {});
+	for (let idx = 0; idx < new_pools.length; idx++) {
+		new_pools[idx] = pool.toSorted((a, b) => price());
+	}
+	return new_pools;
+}
+
+export function price(reserves_x, decimals_x, reserves_y, decimals_y) {
+	return reserves_y / reserves_x / 10 ** (decimals_x - decimals_y);
 }
 
 export function compare_prices(pools) {
