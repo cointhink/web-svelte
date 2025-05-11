@@ -1,6 +1,7 @@
 <script>
 	import Menubar from '$lib/Menubar.svelte';
 	import PoolPrice from '$lib/PoolPrice.svelte';
+	import PoolInventory from '$lib/PoolInventory.svelte';
 	import * as poollib from '$lib/pool';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL } from '$env/static/public';
@@ -8,7 +9,6 @@
 	export let data;
 
 	let pools = [];
-	let markets = [];
 	let token = {};
 	let tokens = {};
 	let groups = {};
@@ -59,7 +59,9 @@
 			<div class="numbers">
 				0x{pool.contract_address}
 				{#if pool.reserves}
-					{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
+					<span id="pool_pair">
+						{tokens[pool.token0].symbol}/{tokens[pool.token1].symbol}
+					</span>
 				{/if}
 				{#if pool.reserves}
 					<span class="bigger">
@@ -79,10 +81,8 @@
 							/>
 						{/if}
 						inventory:
-						{pool.reserves.x / 10 ** tokens[pool.token0].decimals}
-						{tokens[pool.token0].symbol}
-						{pool.reserves.y / 10 ** tokens[pool.token1].decimals}
-						{tokens[pool.token1].symbol}
+						<PoolInventory reserves={pool.reserves.x} token={tokens[pool.token0]} />
+						<PoolInventory reserves={pool.reserves.y} token={tokens[pool.token1]} />
 					</span>
 				{/if}
 			</div>
@@ -91,6 +91,10 @@
 </div>
 
 <style>
+	#pool_pair {
+		width: 7em;
+		display: inline-block;
+	}
 	.numbers {
 		font-family: monospace;
 	}

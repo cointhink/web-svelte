@@ -1,4 +1,6 @@
 <script lang="ts">
+	import * as poollib from '$lib/pool';
+
 	export let reserves_x;
 	export let reserves_y;
 	export let token_x;
@@ -8,7 +10,7 @@
 	let maxSigFigDig = 8;
 	const formatter = new Intl.NumberFormat(locale, { maximumSignificantDigits: maxSigFigDig });
 
-	let price = reserves_y / reserves_x / 10 ** (token_x.decimals - token_y.decimals);
+	let price = poollib.price(reserves_x, token_x.decimals, reserves_y, token_y.decimals);
 	let price_sigfig = formatter.format(price);
 	let zero_length;
 	let price_zero_pre;
