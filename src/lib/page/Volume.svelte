@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Menubar from '$lib/Menubar.svelte';
 	import { onMount } from 'svelte';
+	import Menubar from '$lib/Menubar.svelte';
 	import Poolrow from '$lib/Poolrow.svelte';
 	import * as pool from '$lib/pool';
 
