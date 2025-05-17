@@ -10,6 +10,7 @@
 
 	let logs = [];
 	let pool = {};
+	let reserves = { x: 0, y: 0 };
 	let token0 = { decimals: 0 };
 	let token1 = { decimals: 0 };
 	let volume0 = 0;
@@ -19,7 +20,7 @@
 
 	onMount(async () => {
 		pool = await poollib.pool(data.params.address);
-		pool.reserves = await poollib.reserves(pool.contract_address);
+		reserves = await poollib.reserves(pool.contract_address);
 		token0 = await poollib.coin(pool.token0);
 		token1 = await poollib.coin(pool.token1);
 
@@ -84,11 +85,28 @@
 </div>
 
 <div>
-	fees earned:
+	Fees earned:
 	{util.numDec(volume0 * 0.003, token0.decimals)}
 	{token0.symbol}
 	{util.numDec(volume1 * 0.003, token1.decimals)}
 	{token1.symbol}
+</div>
+
+<div>
+	Pool reserves:
+	{util.bigint_display(reserves.x, token0.decimals, 4)}
+	{token0.symbol}
+	{util.bigint_display(reserves.y, token1.decimals, 4)}
+	{token1.symbol}
+</div>
+
+<div>
+	Pool price:
+	{reserves.x / 10 ** token0.decimals / (reserves.y / 10 ** token1.decimals)}
+	{token0.symbol}/{token1.symbol}
+
+	{reserves.y / 10 ** token1.decimals / (reserves.x / 10 ** token0.decimals)}
+	{token1.symbol}/{token0.symbol}
 </div>
 
 <style>
