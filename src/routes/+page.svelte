@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageVolume from '$lib/page/Volume.svelte';
-	import PageTopSwaps from '$lib/page/TopSwaps.svelte';
+	import PageTopPairs from '$lib/page/TopPairs.svelte';
 	import { onMount } from 'svelte';
 	import { PUBLIC_SQL_URL, PUBLIC_API_URL } from '$env/static/public';
 	import * as pool from '$lib/pool';
@@ -17,7 +17,7 @@
 </script>
 
 <div id="page">
-	<PageTopSwaps />
+	<PageTopPairs since={data.since} />
 </div>
 
 <div>

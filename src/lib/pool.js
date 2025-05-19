@@ -13,6 +13,12 @@ export async function pools_load(hours) {
 	return pools;
 }
 
+export async function pools_top_pairs(hours) {
+	const url = PUBLIC_API_URL + '/pools/top_pairs?since=' + hours;
+	const pools = await fetch(url).then((ps) => ps.json());
+	return pools;
+}
+
 export async function pools_count_load() {
 	const url = PUBLIC_SQL_URL + '/pools';
 	const resp = await fetch(url, { method: 'HEAD' });
