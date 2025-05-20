@@ -35,15 +35,19 @@
 
 {#each pool_pairs as pool_pair}
 	<div>
-		<a href="/pool/{pool_pair[0].contract_address}">
-			<PoolPairName {tokens} pool={pool_pair[0]} />
-		</a>
-		<a href="/pool/{pool_pair[1].contract_address}">
-			<PoolPairName {tokens} pool={pool_pair[1]} />
-		</a>
-		<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
-		<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
-		<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
-		<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
+		<div>
+			<a href="/pool/{pool_pair[0].contract_address}">
+				<PoolPairName {tokens} pool={pool_pair[0]} />
+			</a>
+			<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
+			<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
+		</div>
+		<div>
+			<a href="/pool/{pool_pair[1].contract_address}">
+				<PoolPairName {tokens} pool={pool_pair[1]} />
+			</a>
+			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
+			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
+		</div>
 	</div>
 {/each}
