@@ -3,6 +3,7 @@
 	import Menubar from '$lib/Menubar.svelte';
 	import PoolPairName from '$lib/PoolPairName.svelte';
 	import PoolPairReserve from '$lib/PoolPairReserve.svelte';
+	import PoolPriceWithSymbol from '$lib/PoolPriceWithSymbol.svelte';
 	import * as pool from '$lib/pool';
 	import * as uniswap from '$lib/uniswap-v2';
 
@@ -50,6 +51,7 @@
 			</a>
 			<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
 			<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
+			price: <PoolPriceWithSymbol {tokens} pool={pool_pair[0]} reserves={pool_pair[3]} />
 		</div>
 		<div>
 			<a href="/pool/{pool_pair[1].contract_address}">
@@ -57,6 +59,7 @@
 			</a>
 			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
 			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
+			price: <PoolPriceWithSymbol {tokens} pool={pool_pair[1]} reserves={pool_pair[4]} />
 		</div>
 
 		{#if pool_pair.optimal_y}
@@ -66,7 +69,6 @@
 					token={pool_pair[1].token1}
 					reserve={pool_pair.optimal_y[0]}
 				/>
-			</div>
 			<div>
 				root2: Sell <PoolPairReserve
 					{tokens}
