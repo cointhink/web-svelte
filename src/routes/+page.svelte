@@ -17,7 +17,7 @@
 </script>
 
 <div id="page">
-	<PageTopPairs since={data.since} />
+	<PageTopPairs {lastBlock} since={data.since} />
 </div>
 
 <div>

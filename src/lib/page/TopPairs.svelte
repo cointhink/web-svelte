@@ -7,6 +7,7 @@
 	import * as pool from '$lib/pool';
 	import * as uniswap from '$lib/uniswap-v2';
 
+	export let lastBlock;
 	export let since;
 	let pool_pairs = [];
 	let loading = true;
@@ -21,7 +22,6 @@
 				pool_pairs[idx][3].y,
 				pool_pairs[idx][4].y
 			);
-			console.log('optimal_y', pool_pairs[idx].optimal_y);
 
 			// fetch and cache token details
 			tokens[pool_pairs[idx][0].token0] ||= await pool.coin(pool_pairs[idx][0].token0);
@@ -51,7 +51,7 @@
 			</a>
 			<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
 			<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
-			({pool_pair[3].block_number}) price: <PoolPriceWithSymbol
+			({(((lastBlock.number - pool_pair[3].block_number) * 12) / 60).toFixed(1)} min old) price: <PoolPriceWithSymbol
 				{tokens}
 				pool={pool_pair[0]}
 				reserves={pool_pair[3]}
@@ -63,7 +63,7 @@
 			</a>
 			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
 			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
-			({pool_pair[4].block_number}) price: <PoolPriceWithSymbol
+			({(((lastBlock.number - pool_pair[4].block_number) * 12) / 60).toFixed(1)} min old) price: <PoolPriceWithSymbol
 				{tokens}
 				pool={pool_pair[1]}
 				reserves={pool_pair[4]}
