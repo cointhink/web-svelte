@@ -1,0 +1,20 @@
+Uniswap v2 optimum arbitrage
+
+f = fee 0.3%
+
+k = (1-f)*Xb + (1-f)^2*Xa
+
+k^2 * dYa^2 + 2k * Ya * Yb * dYa + (Ya * Xb)^2 - (1-f)^2 * Xa * Yb * Ya * Xb = 0
+---           ------------         -----------------------------------------
+ a                  b                                 c
+
+k = (1-f)*Xb + (1-f)^2*Xa
+a = k^2
+b = 2k * Ya * Yb
+c = (Ya * Xb)^2 - (1-f)^2 * Xa * Yb * Ya * Xb
+
+write a function to compute (-b + sqrt(b^2 - 4ac)) / 2a
+
+optimum in-amount dYa* = (-b + sqrt(b^2 - 4ac)) / 2a
+ 
+https://www.youtube.com/watch?v=9EKksG-fF1k&t=344s

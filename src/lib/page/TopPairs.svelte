@@ -4,6 +4,7 @@
 	import PoolPairName from '$lib/PoolPairName.svelte';
 	import PoolPairReserve from '$lib/PoolPairReserve.svelte';
 	import * as pool from '$lib/pool';
+	import * as uniswap from '$lib/uniswap-v2';
 
 	export let since;
 	let pool_pairs = [];
@@ -13,6 +14,14 @@
 	onMount(async () => {
 		pool_pairs = await pool.pools_top_pairs(since);
 		for (let idx = 0; idx < pool_pairs.length; idx++) {
+			pool_pairs[idx].optimal_y = uniswap.optimal_in(
+				pool_pairs[idx][3].x,
+				pool_pairs[idx][4].x,
+				pool_pairs[idx][3].y,
+				pool_pairs[idx][4].y
+			);
+			console.log('optimal_y', pool_pairs[idx].optimal_y);
+
 			// fetch and cache token details
 			tokens[pool_pairs[idx][0].token0] ||= await pool.coin(pool_pairs[idx][0].token0);
 			tokens[pool_pairs[idx][0].token1] ||= await pool.coin(pool_pairs[idx][0].token1);
@@ -49,5 +58,22 @@
 			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
 			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
 		</div>
+
+		{#if pool_pair.optimal_y}
+			<div>
+				root1: Sell <PoolPairReserve
+					{tokens}
+					token={pool_pair[1].token1}
+					reserve={pool_pair.optimal_y[0]}
+				/>
+			</div>
+			<div>
+				root2: Sell <PoolPairReserve
+					{tokens}
+					token={pool_pair[1].token1}
+					reserve={pool_pair.optimal_y[1]}
+				/>
+			</div>
+		{/if}
 	</div>
 {/each}
