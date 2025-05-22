@@ -16,3 +16,7 @@ function quadratic_real_roots(a, b, c) {
 		return [root1, root2];
 	}
 }
+
+export function get_x_out(dY, x, y) {
+	return (1000 * x * dY) / (997 * (y - dY)) + 1;
+}
