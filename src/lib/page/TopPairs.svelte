@@ -16,30 +16,22 @@
 	onMount(async () => {
 		pool_pairs = await pool.pools_top_pairs(since);
 		for (let idx = 0; idx < pool_pairs.length; idx++) {
-			pool_pairs[idx].optimal_dy = uniswap.optimal_in(
+			pool_pairs[idx].optimal_dy = uniswap.optimal_y_in(
 				pool_pairs[idx][3].x,
 				pool_pairs[idx][4].x,
 				pool_pairs[idx][3].y,
 				pool_pairs[idx][4].y
 			);
-			console.log(
-				'ody',
-				pool_pairs[idx].optimal_dy,
-				'x',
-				pool_pairs[idx][3].x,
-				'y',
-				pool_pairs[idx][3].y
-			);
 
-			pool_pairs[idx].mid_dx_r0 = uniswap.get_x_out(
+			pool_pairs[idx].mid_dx_r0 = uniswap.get_y_out(
 				pool_pairs[idx].optimal_dy[0],
-				pool_pairs[idx][3].x,
-				pool_pairs[idx][3].y
+				pool_pairs[idx][3].y,
+				pool_pairs[idx][3].x
 			);
-			pool_pairs[idx].mid_dx_r1 = uniswap.get_x_out(
+			pool_pairs[idx].mid_dx_r1 = uniswap.get_y_out(
 				pool_pairs[idx].optimal_dy[1],
-				pool_pairs[idx][3].x,
-				pool_pairs[idx][3].y
+				pool_pairs[idx][3].y,
+				pool_pairs[idx][3].x
 			);
 
 			// fetch and cache token details
@@ -112,7 +104,7 @@
 				/>
 				mid-step-price <PoolPairReserve
 					{tokens}
-					token={pool_pair[0].token0}
+					token={pool_pair[0].token1}
 					reserve={pool_pair.mid_dx_r1}
 				/>
 			</div>
