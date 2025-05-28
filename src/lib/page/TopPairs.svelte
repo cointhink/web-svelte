@@ -16,6 +16,12 @@
 	onMount(async () => {
 		pool_pairs = await pool.pools_top_pairs(since);
 		for (let idx = 0; idx < pool_pairs.length; idx++) {
+			console.log(
+				pool_pairs[idx][3].x,
+				pool_pairs[idx][3].y,
+				pool_pairs[idx][4].x,
+				pool_pairs[idx][4].y
+			);
 			pool_pairs[idx].optimal_ady = uniswap.optimal_ay_in(
 				pool_pairs[idx][3].x,
 				pool_pairs[idx][3].y,
@@ -35,12 +41,13 @@
 			);
 			pool_pairs[idx].mid_step_price =
 				(pool_pairs[idx][3].x - pool_pairs[idx].s1_adx) /
-				(pool_pairs[idx][3].y - -pool_pairs[idx].optimal_ady);
-			console.log('3.x', pool_pairs[idx][3].x, '3.y', pool_pairs[idx][3].y);
-			console.log('s1_adx', pool_pairs[idx].s1_adx, 'optimal_ady', pool_pairs[idx].optimal_ady);
-			console.log('num', pool_pairs[idx][3].x - pool_pairs[idx].s1_adx);
-			console.log('den', pool_pairs[idx][3].y - -pool_pairs[idx].optimal_ady);
-			console.log('mid_step_price', pool_pairs[idx].mid_step_price);
+				(parseInt(pool_pairs[idx][3].y) + pool_pairs[idx].optimal_ady);
+			console.log(
+				'mid_step_price',
+				pool_pairs[idx].mid_step_price,
+				1 / pool_pairs[idx].mid_step_price
+			);
+			pool_pairs[idx].trade_price = pool_pairs[idx].s1_adx / pool_pairs[idx].optimal_ady;
 
 			// fetch and cache token details
 			tokens[pool_pairs[idx][0].token0] ||= await pool.coin(pool_pairs[idx][0].token0);
@@ -63,7 +70,7 @@
 {/if}
 
 {#each pool_pairs as pool_pair}
-	<div>
+	<ul>
 		<div>
 			<a href="/pool/{pool_pair[0].contract_address}">
 				<PoolPairName {tokens} pool={pool_pair[0]} />
@@ -98,10 +105,16 @@
 					token={pool_pair[0].token1}
 					reserve={pool_pair.optimal_ady}
 				/>
-				mid-step-price <PoolPairReserve
+				mid-step price: <PoolPairReserve
 					{tokens}
 					token={pool_pair[0].token0}
 					reserve={pool_pair.mid_step_price}
+				/>
+				{1 / pool_pair.mid_step_price}
+				trade price: <PoolPairReserve
+					{tokens}
+					token={pool_pair[0].token0}
+					reserve={pool_pair.trade_price}
 				/>
 			</div>
 			<div>
@@ -123,5 +136,5 @@
 				/>
 			</div>
 		{/if}
-	</div>
+	</ul>
 {/each}
