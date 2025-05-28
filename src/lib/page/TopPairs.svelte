@@ -75,27 +75,27 @@
 			<a href="/pool/{pool_pair[0].contract_address}">
 				<PoolPairName {tokens} pool={pool_pair[0]} />
 			</a>
+			<span>
+				<PoolPriceWithSymbol {tokens} pool={pool_pair[0]} reserves={pool_pair[3]} />
+			</span>
+			inventory:
 			<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
 			<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
 			({pool_pair[3].block_number}
-			{(((lastBlock.number - pool_pair[3].block_number) * 12) / 60).toFixed(1)} min old) price: <PoolPriceWithSymbol
-				{tokens}
-				pool={pool_pair[0]}
-				reserves={pool_pair[3]}
-			/>
+			{(((lastBlock.number - pool_pair[3].block_number) * 12) / 60).toFixed(1)} min old)
 		</div>
 		<div>
 			<a href="/pool/{pool_pair[1].contract_address}">
 				<PoolPairName {tokens} pool={pool_pair[1]} />
 			</a>
+			<span>
+				<PoolPriceWithSymbol {tokens} pool={pool_pair[1]} reserves={pool_pair[4]} />
+			</span>
+			inventory:
 			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
 			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
 			({pool_pair[3].block_number}
-			{(((lastBlock.number - pool_pair[4].block_number) * 12) / 60).toFixed(1)} min old) price: <PoolPriceWithSymbol
-				{tokens}
-				pool={pool_pair[1]}
-				reserves={pool_pair[4]}
-			/>
+			{(((lastBlock.number - pool_pair[4].block_number) * 12) / 60).toFixed(1)} min old)
 		</div>
 
 		{#if pool_pair.mid_step_price}
