@@ -16,23 +16,31 @@
 	onMount(async () => {
 		pool_pairs = await pool.pools_top_pairs(since);
 		for (let idx = 0; idx < pool_pairs.length; idx++) {
-			pool_pairs[idx].optimal_dy = uniswap.optimal_y_in(
+			pool_pairs[idx].optimal_ady = uniswap.optimal_ay_in(
 				pool_pairs[idx][3].x,
-				pool_pairs[idx][4].x,
 				pool_pairs[idx][3].y,
+				pool_pairs[idx][4].x,
 				pool_pairs[idx][4].y
 			);
 
-			pool_pairs[idx].mid_dx_r0 = uniswap.get_y_out(
-				pool_pairs[idx].optimal_dy[0],
+			pool_pairs[idx].s1_adx = uniswap.get_y_out(
+				pool_pairs[idx].optimal_ady,
 				pool_pairs[idx][3].y,
 				pool_pairs[idx][3].x
 			);
-			pool_pairs[idx].mid_dx_r1 = uniswap.get_y_out(
-				pool_pairs[idx].optimal_dy[1],
-				pool_pairs[idx][3].y,
-				pool_pairs[idx][3].x
+			pool_pairs[idx].s2_ady = uniswap.get_y_out(
+				pool_pairs[idx].s1_adx,
+				pool_pairs[idx][4].x,
+				pool_pairs[idx][4].y
 			);
+			pool_pairs[idx].mid_step_price =
+				(pool_pairs[idx][3].x - pool_pairs[idx].s1_adx) /
+				(pool_pairs[idx][3].y - -pool_pairs[idx].optimal_ady);
+			console.log('3.x', pool_pairs[idx][3].x, '3.y', pool_pairs[idx][3].y);
+			console.log('s1_adx', pool_pairs[idx].s1_adx, 'optimal_ady', pool_pairs[idx].optimal_ady);
+			console.log('num', pool_pairs[idx][3].x - pool_pairs[idx].s1_adx);
+			console.log('den', pool_pairs[idx][3].y - -pool_pairs[idx].optimal_ady);
+			console.log('mid_step_price', pool_pairs[idx].mid_step_price);
 
 			// fetch and cache token details
 			tokens[pool_pairs[idx][0].token0] ||= await pool.coin(pool_pairs[idx][0].token0);
@@ -83,29 +91,35 @@
 			/>
 		</div>
 
-		{#if pool_pair.optimal_dy}
+		{#if pool_pair.mid_step_price}
 			<div>
-				root1: Sell <PoolPairReserve
+				optimal buy: <PoolPairReserve
 					{tokens}
-					token={pool_pair[1].token1}
-					reserve={pool_pair.optimal_dy[0]}
+					token={pool_pair[0].token1}
+					reserve={pool_pair.optimal_ady}
 				/>
 				mid-step-price <PoolPairReserve
 					{tokens}
 					token={pool_pair[0].token0}
-					reserve={pool_pair.mid_dx_r0}
+					reserve={pool_pair.mid_step_price}
 				/>
 			</div>
 			<div>
-				root2: Sell <PoolPairReserve
-					{tokens}
-					token={pool_pair[1].token1}
-					reserve={pool_pair.optimal_dy[1]}
-				/>
-				mid-step-price <PoolPairReserve
+				Trade 1 in: <PoolPairReserve
 					{tokens}
 					token={pool_pair[0].token1}
-					reserve={pool_pair.mid_dx_r1}
+					reserve={pool_pair.optimal_ady}
+				/>
+				Trade 2 out: <PoolPairReserve
+					{tokens}
+					token={pool_pair[0].token1}
+					reserve={pool_pair.s2_ady}
+				/>
+				Profit:
+				<PoolPairReserve
+					{tokens}
+					token={pool_pair[0].token1}
+					reserve={pool_pair.s2_ady - pool_pair.optimal_ady}
 				/>
 			</div>
 		{/if}

@@ -5,8 +5,8 @@
 </script>
 
 {#if tokens[token]}
-	{parseInt(reserve / 10 ** tokens[token].decimals).toFixed(4)}
+	{(reserve / 10 ** tokens[token].decimals).toFixed(8)}
 	{tokens[token].symbol}
 {:else}
-	{parseInt(reserve).toFixed(4)}
+	{JSON.stringify(reserve)}
 {/if}
