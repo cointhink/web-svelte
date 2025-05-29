@@ -4,6 +4,7 @@
 	import PoolPairName from '$lib/PoolPairName.svelte';
 	import PoolPairReserve from '$lib/PoolPairReserve.svelte';
 	import PoolPriceWithSymbol from '$lib/PoolPriceWithSymbol.svelte';
+	import BlockNumber from '$lib/BlockNumber.svelte';
 	import * as pool from '$lib/pool';
 	import * as uniswap from '$lib/uniswap-v2';
 
@@ -81,8 +82,7 @@
 			inventory:
 			<PoolPairReserve {tokens} token={pool_pair[0].token0} reserve={pool_pair[3].x} />
 			<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair[3].y} />
-			({pool_pair[3].block_number}
-			{(((lastBlock.number - pool_pair[3].block_number) * 12) / 60).toFixed(1)} min old)
+			(<BlockNumber last_block={lastBlock} block_number={pool_pair[3].block_number} />)
 		</div>
 		<div>
 			<a href="/pool/{pool_pair[1].contract_address}">
@@ -94,29 +94,10 @@
 			inventory:
 			<PoolPairReserve {tokens} token={pool_pair[1].token0} reserve={pool_pair[4].x} />
 			<PoolPairReserve {tokens} token={pool_pair[1].token1} reserve={pool_pair[4].y} />
-			({pool_pair[3].block_number}
-			{(((lastBlock.number - pool_pair[4].block_number) * 12) / 60).toFixed(1)} min old)
+			(<BlockNumber last_block={lastBlock} block_number={pool_pair[4].block_number} />)
 		</div>
 
 		{#if pool_pair.mid_step_price}
-			<div>
-				optimal buy: <PoolPairReserve
-					{tokens}
-					token={pool_pair[0].token1}
-					reserve={pool_pair.optimal_ady}
-				/>
-				mid-step price: <PoolPairReserve
-					{tokens}
-					token={pool_pair[0].token0}
-					reserve={pool_pair.mid_step_price}
-				/>
-				{1 / pool_pair.mid_step_price}
-				trade price: <PoolPairReserve
-					{tokens}
-					token={pool_pair[0].token0}
-					reserve={pool_pair.trade_price}
-				/>
-			</div>
 			<div>
 				Trade 1 in: <PoolPairReserve
 					{tokens}
