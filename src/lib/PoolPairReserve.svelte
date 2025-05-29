@@ -6,8 +6,9 @@
 	let locale = navigator.language || navigator.userLanguage;
 
 	function scale(num) {
-		const decimals = 4; //tokens[token].decimals;
-		const formatter = new Intl.NumberFormat(locale, { maximumSignificantDigits: decimals });
+		const decimals = tokens[token].decimals;
+		const maxSigFig = 5;
+		const formatter = new Intl.NumberFormat(locale, { maximumSignificantDigits: maxSigFig });
 		const reserve_scaled = reserve / 10 ** decimals;
 		return formatter.format(reserve_scaled);
 	}
