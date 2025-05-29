@@ -26,11 +26,15 @@
 
 		lastBlock = await poollib.latestBlock();
 		lastBlock.datestr = date.format(lastBlock.date, 'YYYY-MM-DD HH:mm:ss');
-		let startBlockNumber = lastBlock.number - 24 * 60 * (60 / 12);
-		startBlock = await poollib.block(startBlockNumber);
+		startBlock.number = lastBlock.number - 24 * 60 * (60 / 12);
+		console.log('lastBlock', lastBlock);
+		console.log('startBlock', startBlock);
+		startBlock.timestamp = lastBlock.timestamp - 24 * 60 * 60;
+		startBlock.date = new Date(startBlock.timestamp * 1000);
 		startBlock.datestr = date.format(startBlock.date, 'YYYY-MM-DD HH:mm:ss');
+		console.log('startBlock 2', startBlock);
 
-		logs = await filtered_logs(data.params.address, startBlockNumber, lastBlock.number);
+		logs = await filtered_logs(data.params.address, startBlock.number, lastBlock.number);
 		for (const log of logs) {
 			volume1 += log.in1;
 			volume0 += log.in0;
