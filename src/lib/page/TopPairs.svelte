@@ -40,14 +40,8 @@
 				pool_pairs[idx][4].x,
 				pool_pairs[idx][4].y
 			);
-			pool_pairs[idx].mid_step_price =
-				(pool_pairs[idx][3].x - pool_pairs[idx].s1_adx) /
-				(parseInt(pool_pairs[idx][3].y) + pool_pairs[idx].optimal_ady);
-			console.log(
-				'mid_step_price',
-				pool_pairs[idx].mid_step_price,
-				1 / pool_pairs[idx].mid_step_price
-			);
+			pool_pairs[idx].mid_ax = pool_pairs[idx][3].x - pool_pairs[idx].s1_adx;
+			pool_pairs[idx].mid_ay = parseInt(pool_pairs[idx][3].y) + pool_pairs[idx].optimal_ady;
 			pool_pairs[idx].trade_price = pool_pairs[idx].s1_adx / pool_pairs[idx].optimal_ady;
 
 			// fetch and cache token details
@@ -97,14 +91,18 @@
 			(<BlockNumber last_block={lastBlock} block_number={pool_pair[4].block_number} />)
 		</div>
 
-		{#if pool_pair.mid_step_price}
+		{#if pool_pair.mid_ax}
 			<div>
 				Trade 1 in: <PoolPairReserve
 					{tokens}
 					token={pool_pair[0].token1}
 					reserve={pool_pair.optimal_ady}
 				/>
-				Trade 2 out: <PoolPairReserve
+				(mid-step price: <PoolPriceWithSymbol
+					{tokens}
+					pool={pool_pair[0]}
+					reserves={{ x: pool_pair.mid_ax, y: pool_pair.mid_ay }}
+				/>) Trade 2 out: <PoolPairReserve
 					{tokens}
 					token={pool_pair[0].token1}
 					reserve={pool_pair.s2_ady}
