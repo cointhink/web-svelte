@@ -43,6 +43,7 @@
 			pool_pairs[idx].mid_ax = pool_pairs[idx][3].x - pool_pairs[idx].s1_adx;
 			pool_pairs[idx].mid_ay = parseInt(pool_pairs[idx][3].y) + pool_pairs[idx].optimal_ady;
 			pool_pairs[idx].trade_price = pool_pairs[idx].s1_adx / pool_pairs[idx].optimal_ady;
+			pool_pairs[idx].profit = pool_pairs[idx].s2_ady - pool_pairs[idx].optimal_ady;
 
 			// fetch and cache token details
 			tokens[pool_pairs[idx][0].token0] ||= await pool.coin(pool_pairs[idx][0].token0);
@@ -50,6 +51,7 @@
 			tokens[pool_pairs[idx][1].token0] ||= await pool.coin(pool_pairs[idx][1].token0);
 			tokens[pool_pairs[idx][1].token1] ||= await pool.coin(pool_pairs[idx][1].token1);
 		}
+		pool_pairs.sort((x, y) => y.profit - x.profit);
 		loading = false;
 	});
 </script>
@@ -108,11 +110,7 @@
 					reserve={pool_pair.s2_ady}
 				/>
 				Profit:
-				<PoolPairReserve
-					{tokens}
-					token={pool_pair[0].token1}
-					reserve={pool_pair.s2_ady - pool_pair.optimal_ady}
-				/>
+				<PoolPairReserve {tokens} token={pool_pair[0].token1} reserve={pool_pair.profit} />
 			</div>
 		{/if}
 	</ul>
