@@ -17,12 +17,6 @@
 	onMount(async () => {
 		pool_pairs = await pool.pools_top_pairs(since);
 		for (let idx = 0; idx < pool_pairs.length; idx++) {
-			console.log(
-				pool_pairs[idx][3].x,
-				pool_pairs[idx][3].y,
-				pool_pairs[idx][4].x,
-				pool_pairs[idx][4].y
-			);
 			pool_pairs[idx].optimal_ady = uniswap.optimal_ay_in(
 				pool_pairs[idx][3].x,
 				pool_pairs[idx][3].y,
@@ -40,7 +34,7 @@
 				pool_pairs[idx][4].x,
 				pool_pairs[idx][4].y
 			);
-			pool_pairs[idx].mid_ax = pool_pairs[idx][3].x - pool_pairs[idx].s1_adx;
+			pool_pairs[idx].mid_ax = parseInt(pool_pairs[idx][3].x) - pool_pairs[idx].s1_adx;
 			pool_pairs[idx].mid_ay = parseInt(pool_pairs[idx][3].y) + pool_pairs[idx].optimal_ady;
 			pool_pairs[idx].trade_price = pool_pairs[idx].s1_adx / pool_pairs[idx].optimal_ady;
 			pool_pairs[idx].profit = pool_pairs[idx].s2_ady - pool_pairs[idx].optimal_ady;
@@ -50,8 +44,17 @@
 			tokens[pool_pairs[idx][0].token1] ||= await pool.coin(pool_pairs[idx][0].token1);
 			tokens[pool_pairs[idx][1].token0] ||= await pool.coin(pool_pairs[idx][1].token0);
 			tokens[pool_pairs[idx][1].token1] ||= await pool.coin(pool_pairs[idx][1].token1);
+
+			console.log(
+				[
+					'ax=' + pool_pairs[idx][3].x,
+					'ay=' + pool_pairs[idx][3].y,
+					'bx=' + pool_pairs[idx][4].x,
+					'by=' + pool_pairs[idx][4].y
+				].join(';')
+			);
 		}
-		pool_pairs.sort((x, y) => y.profit - x.profit);
+		//pool_pairs.sort((x, y) => y.profit - x.profit);
 		loading = false;
 	});
 </script>
