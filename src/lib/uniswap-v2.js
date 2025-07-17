@@ -5,7 +5,7 @@ export function optimal_ay_in(Xa, Ya, Xb, Yb) {
 	const a = Math.pow(k, 2);
 	const b = 2 * k * Ya * Xb;
 	const c = Math.pow(Ya * Xb, 2) - Math.pow(1 - POOL_FEE, 2) * Xa * Xb * Ya * Yb;
-	return quadratic_real_roots(a, b, c);
+	return Math.floor(quadratic_real_roots(a, b, c));
 }
 
 function quadratic_real_roots(a, b, c) {
