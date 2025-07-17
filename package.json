@@ -9,7 +9,8 @@
     "d3": "^7.8.5",
     "d3-scale": "^4.0.2",
     "date-and-time": "^3.0.3",
-    "generatorics": "^1.1.0"
+    "generatorics": "^1.1.0",
+    "mocha": "^11.7.1"
   },
   "scripts": {
     "dev": "vite dev",
@@ -18,7 +19,7 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "lint": "prettier --plugin-search-dir . --check .",
-    "format": "prettier --plugin-search-dir . --write .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
