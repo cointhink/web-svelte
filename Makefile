@@ -8,3 +8,7 @@ format:
 
 dev:
 	python svelte-simple-server.py
+
+test:
+	npm run test
+
